@@ -1,6 +1,8 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key, this.title}) : super(key: key);
@@ -12,6 +14,13 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  String barcode = "";
+
+  @override
+  initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +48,21 @@ class _StartScreenState extends State<StartScreen> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                         child: OutlineButton(
-                          textColor: Colors.white,
-                          child: Text('Scan'),
-                          onPressed: () { },
+                          child: Text(
+                            "Scan",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: scan,
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
                         ),
                       ),
                       GestureDetector(
@@ -74,5 +95,22 @@ class _StartScreenState extends State<StartScreen> {
         ),
       ),
     );
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      print(barcode);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        print('The user did not grant the camera permission!');
+      } else {
+        print('Unknown error: $e');
+      }
+    } on FormatException {
+      print('null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      print('Unknown error: $e');
+    }
   }
 }
