@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Config.colorPalette|,
+        primarySwatch: Config.colorPalette,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -28,39 +26,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      backgroundColor: Config.colorPalette.shade500,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(50, 100, 50, 40),
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Image(
+                  image: AssetImage("assets/devfest2019_logo.png"),
+                ),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Enter the four-digit number that appears on the back side of your badge',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        cursorColor: Colors.white,
+                        style: TextStyle(fontSize: 36),
+                        maxLength: 4,
+                      ),
+                      OutlineButton(
+                        textColor: Colors.white,
+                        child: Text('OK'),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+                Image(
+                  image: AssetImage("assets/gug_logo.png"),
+                  height: 30,
+                ),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
