@@ -1,28 +1,11 @@
-import 'dart:async';
-
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:devfest_mobile_app/screens/scan_result.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class StartScreen extends StatefulWidget {
-  StartScreen({Key key, this.title}) : super(key: key);
+class ResultScreen extends StatelessWidget {
+  final String barcode;
 
-  final String title;
-
-  @override
-  _StartScreenState createState() => _StartScreenState();
-}
-
-class _StartScreenState extends State<StartScreen> {
-  String barcode = "";
-
-  @override
-  initState() {
-    super.initState();
-  }
+  ResultScreen({Key key, @required this.barcode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +25,10 @@ class _StartScreenState extends State<StartScreen> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'To participate in game you have to scan your QR code that is located at the back of your badge.',
+                        'Welcome number $barcode!',
                         style: TextStyle(
                           color: Colors.white,
+                          fontSize: 36,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -52,13 +36,20 @@ class _StartScreenState extends State<StartScreen> {
                         padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
                         child: OutlineButton(
                           child: Text(
-                            "Scan",
+                            "Continue",
                             style: TextStyle(color: Colors.white),
                           ),
                           color: Config.colorPalette.shade50,
                           splashColor: Config.colorPalette.shade100,
                           highlightColor: Config.colorPalette.shade100,
-                          onPressed: scan,
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainScreen(),
+                              ),
+                            );
+                          },
                           borderSide: BorderSide(
                             color: Colors.white,
                             width: 1,
@@ -67,23 +58,6 @@ class _StartScreenState extends State<StartScreen> {
                             borderRadius: new BorderRadius.circular(7.0),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Continue without login',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
-                            ),
-                          );
-                        },
                       ),
                     ],
                   ),
@@ -98,27 +72,5 @@ class _StartScreenState extends State<StartScreen> {
         ),
       ),
     );
-  }
-
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultScreen(barcode: barcode),
-        ),
-      );
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        print('The user did not grant the camera permission!');
-      } else {
-        print('Unknown error: $e');
-      }
-    } on FormatException {
-      print('null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      print('Unknown error: $e');
-    }
   }
 }
