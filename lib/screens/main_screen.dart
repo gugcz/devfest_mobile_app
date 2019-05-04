@@ -1,7 +1,8 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/screens/scan_map_code.dart';
-import 'package:devfest_mobile_app/components/topic_circle.dart';
+import 'package:devfest_mobile_app/components/talk_card.dart';
+import 'package:devfest_mobile_app/components/topic.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -41,90 +42,60 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Why metal is so great',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                    child: Text(
-                      'Beginners / EN / 40 min',
-                      style: TextStyle(fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                    child: Text(
-                      '9:30 / Hall A',
-                      style: TextStyle(fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(4, 0, 8, 0),
-                          child:
-                              CustomPaint(painter: TopicCircle(Colors.green)),
-                        ),
-                        Text('Android'),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                          child:
-                              CustomPaint(painter: TopicCircle(Colors.orange)),
-                        ),
-                        Text('Firebase')
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: new BorderRadius.circular(20.0),
-                          child: Image(
-                            image: AssetImage("assets/ozzy.jpg"),
-                            height: 40.0,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Ozzy Osbourne',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              Text(
-                                'Black Sabbath',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+          TalkCard(
+            talkName: "Why metal is so great?",
+            firstSubtitle: "Beginners / EN / 40 min",
+            secondSubtitle: "9:30 / EN / Hall A",
+            topics: List<Topic>.from([
+              Topics.android,
+              Topics.firebase,
+            ]),
+            speakerPhoto: Image(
+              image: AssetImage("assets/ozzy.jpg"),
+              height: 40.0,
             ),
+            speakerName: "Ozzy Osbourne",
+            company: "Black Sabbath"
           ),
+          TalkCard(
+            talkName: "Widgets!",
+            secondSubtitle: "9:30 / EN / Hall B",
+            topics: List<Topic>.from([
+              Topics.android,
+              Topics.flutter,
+            ]),
+            speakerPhoto: Image(
+              image: AssetImage("assets/ozzy.jpg"),
+              height: 40.0,
+            ),
+            speakerName: "Ozzy Osbourne",
+            company: "Black Sabbath"
+          ),
+          TalkCard(
+            talkName: "Widgets with Firebase!",
+            firstSubtitle: "Beginners / EN / 40 min",
+            topics: List<Topic>.from([
+              Topics.flutter,
+              Topics.firebase,
+            ]),
+            speakerPhoto: Image(
+              image: AssetImage("assets/ozzy.jpg"),
+              height: 40.0,
+            ),
+            speakerName: "Ozzy Osbourne",
+            company: "Black Sabbath"
+          ),
+          TalkCard(
+            talkName: "No topics!",
+            firstSubtitle: "Beginners / EN / 40 min",
+            secondSubtitle: "10:30 / EN / Hall A",
+            speakerPhoto: Image(
+              image: AssetImage("assets/ozzy.jpg"),
+              height: 40.0,
+            ),
+            speakerName: "Ozzy Osbourne",
+            company: "Black Sabbath"
+          )
         ],
       );
     } else if (_currentIndex == 2) {

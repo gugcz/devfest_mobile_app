@@ -19,7 +19,7 @@ class ResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Image(
-                  image: AssetImage("assets/devfest2019_logo.png"),
+                  image: AssetImage("assets/ozzy.png"),
                 ),
                 Container(
                   child: Column(
