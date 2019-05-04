@@ -7,21 +7,9 @@ import 'package:devfest_mobile_app/screens/scan_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class StartScreen extends StatefulWidget {
-  StartScreen({Key key}) : super(key: key);
-
-  @override
-  _StartScreenState createState() => _StartScreenState();
-}
-
-class _StartScreenState extends State<StartScreen> {
-  String barcode = "";
-
-  @override
-  initState() {
-    super.initState();
-  }
-
+class ScanMapCodeScreen extends StatelessWidget {
+  ScanMapCodeScreen({Key key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +28,7 @@ class _StartScreenState extends State<StartScreen> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'To participate in game you have to scan your QR code that is located at the back of your badge.',
+                        'Scan nearest location barcode to show your location on map.',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -56,7 +44,9 @@ class _StartScreenState extends State<StartScreen> {
                           color: Config.colorPalette.shade50,
                           splashColor: Config.colorPalette.shade100,
                           highlightColor: Config.colorPalette.shade100,
-                          onPressed: scan,
+                          onPressed: () {
+                            scan(context);
+                          },
                           borderSide: BorderSide(
                             color: Colors.white,
                             width: 1,
@@ -68,7 +58,7 @@ class _StartScreenState extends State<StartScreen> {
                       ),
                       GestureDetector(
                         child: Text(
-                          'Continue without login',
+                          'Continue without location',
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: Colors.white,
@@ -98,13 +88,13 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  Future scan() async {
+  Future scan(context) async {
     try {
-      String barcode = await BarcodeScanner.scan();
+      String locationCode = await BarcodeScanner.scan();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultScreen(barcode: barcode),
+          builder: (context) => MapScreen(locationCode: locationCode),
         ),
       );
     } on PlatformException catch (e) {

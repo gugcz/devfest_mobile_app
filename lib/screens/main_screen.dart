@@ -1,5 +1,6 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
+import 'package:devfest_mobile_app/screens/scan_map_code.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -13,6 +14,31 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
+  Widget decideView() {
+    if (_currentIndex == 0) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("This is main screen."),
+        ],
+      );
+    } else if (_currentIndex == 2) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("This is inventory screen."),
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("This is leaderboard screen."),
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +47,25 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Center(
         child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("This is main screen."),
-            ],
-          ),
+          child: decideView(),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         fixedColor: Config.colorPalette.shade700,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ScanMapCodeScreen(),
+              ),
+            );
+          } else {
+            setState(() {
+              _currentIndex = index;
+            });
+          }
         },
         // new
         currentIndex: _currentIndex,
@@ -52,18 +82,10 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.people,
-            ),
-            title: Text(
-              'Speakers',
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.map,
             ),
             title: Text(
-              'Maps',
+              'Map',
             ),
           ),
           BottomNavigationBarItem(
@@ -71,7 +93,15 @@ class _MainScreenState extends State<MainScreen> {
               Icons.business_center,
             ),
             title: Text(
-              'Water',
+              'Inventory',
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.dashboard,
+            ),
+            title: Text(
+              'Leaderboard',
             ),
           ),
         ],
