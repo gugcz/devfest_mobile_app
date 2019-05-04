@@ -73,22 +73,27 @@ class TalkCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            buildTalkName(),
-            buildFirstSubtitle(),
-            buildSecondSubtitle(),
-            buildTopics(),
-            TalkSpeakerInfo(
-              speakerPhoto: speakerPhoto,
-              speakerName: speakerName,
-              company: company,
-            ),
-          ],
+      child: InkWell(
+        onTap: () {
+          print("tapped");
+        },
+        child: Padding(
+          padding: EdgeInsets.all(12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              buildTalkName(),
+              buildFirstSubtitle(),
+              buildSecondSubtitle(),
+              buildTopics(),
+              TalkSpeakerInfo(
+                speakerPhoto: speakerPhoto,
+                speakerName: speakerName,
+                company: company,
+              ),
+            ],
+          ),
         ),
       ),
     );
