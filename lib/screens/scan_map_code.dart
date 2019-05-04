@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
+import 'package:devfest_mobile_app/screens/map_screen.dart';
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:devfest_mobile_app/screens/scan_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
