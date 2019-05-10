@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:devfest_mobile_app/entities/speaker.dart';
 
 class TalkSpeakerInfo extends StatelessWidget {
-  final Image speakerPhoto;
-  final String speakerName;
-  final String company;
+  final Speaker speaker;
 
   TalkSpeakerInfo({
     Key key,
-    @required this.speakerPhoto,
-    @required this.speakerName,
-    this.company,
+    @required this.speaker,
   }) : super(key: key);
 
   Widget buildSpeakerName() {
     return Text(
-      speakerName,
+      speaker.name,
       style: TextStyle(
         fontWeight: FontWeight.w600,
         fontSize: 18,
@@ -23,9 +20,9 @@ class TalkSpeakerInfo extends StatelessWidget {
   }
 
   Widget buildSpeakerCompany() {
-    if (company.length > 0) {
+    if (speaker.company.length > 0) {
       return Text(
-        company,
+        speaker.company,
         style: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14,
@@ -44,7 +41,10 @@ class TalkSpeakerInfo extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: speakerPhoto,
+            child: Image(
+              image: speaker.photo,
+              height: 48.0,
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(8, 0, 0, 0),

@@ -1,8 +1,9 @@
-import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/screens/scan_map_code.dart';
 import 'package:devfest_mobile_app/components/talk_card.dart';
 import 'package:devfest_mobile_app/components/topic.dart';
+import 'package:devfest_mobile_app/entities/talk.dart';
+import 'package:devfest_mobile_app/entities/speaker.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -47,55 +48,66 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           TalkCard(
-              talkName: "Why metal is so great?",
-              firstSubtitle: "Beginners / EN / 40 min",
-              secondSubtitle: "9:30 / EN / Hall A",
-              topics: List<Topic>.from([
-                Topics.android,
-                Topics.firebase,
-              ]),
-              speakerPhoto: Image(
-                image: AssetImage("assets/ozzy.jpg"),
-                height: 40.0,
-              ),
-              speakerName: "Ozzy Osbourne",
-              company: "Black Sabbath"),
+            talk: Talk(
+                name: "Why metal is so great?",
+                firstSubtitle: "Beginners / EN / 40 min",
+                secondSubtitle: "9:30 / EN / Hall A",
+                description: "TBA",
+                topics: List<Topic>.from([
+                  Topics.android,
+                  Topics.firebase,
+                ]),
+                speaker: Speaker(
+                  photo: AssetImage("assets/ozzy.jpg"),
+                  name: "Ozzy Osbourne",
+                  company: "Black Sabbath",
+                )),
+          ),
           TalkCard(
-              talkName: "Widgets!",
+            talk: Talk(
+              name: "Widgets!",
+              description: "TBA",
               secondSubtitle: "9:30 / EN / Hall B",
               topics: List<Topic>.from([
                 Topics.android,
                 Topics.flutter,
               ]),
-              speakerPhoto: Image(
-                image: AssetImage("assets/ozzy.jpg"),
-                height: 40.0,
+              speaker: Speaker(
+                name: "Ozzy Osbourne",
+                company: "Black Sabbath",
+                photo: AssetImage("assets/ozzy.jpg"),
               ),
-              speakerName: "Ozzy Osbourne",
-              company: "Black Sabbath"),
+            ),
+          ),
           TalkCard(
-              talkName: "Widgets with Firebase!",
+            talk: Talk(
+              name: "Widgets with Firebase!",
+              description: "TBA",
               firstSubtitle: "Beginners / EN / 40 min",
               topics: List<Topic>.from([
                 Topics.flutter,
                 Topics.firebase,
               ]),
-              speakerPhoto: Image(
-                image: AssetImage("assets/ozzy.jpg"),
-                height: 40.0,
+              speaker: Speaker(
+                photo: AssetImage("assets/ozzy.jpg"),
+                name: "Ozzy Osbourne",
+                company: "Black Sabbath",
               ),
-              speakerName: "Ozzy Osbourne",
-              company: "Black Sabbath"),
+            ),
+          ),
           TalkCard(
-              talkName: "No topics!",
+            talk: Talk(
+              name: "No topics!",
+              description: "TBA",
               firstSubtitle: "Beginners / EN / 40 min",
               secondSubtitle: "10:30 / EN / Hall A",
-              speakerPhoto: Image(
-                image: AssetImage("assets/ozzy.jpg"),
-                height: 40.0,
+              speaker: Speaker(
+                name: "Ozzy Osbourne",
+                company: "Black Sabbath",
+                photo: AssetImage("assets/ozzy.jpg"),
               ),
-              speakerName: "Ozzy Osbourne",
-              company: "Black Sabbath")
+            ),
+          )
         ],
       );
     } else if (_currentIndex == 2) {
