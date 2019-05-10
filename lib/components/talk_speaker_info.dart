@@ -43,7 +43,7 @@ class TalkSpeakerInfo extends StatelessWidget {
       child: Row(
         children: <Widget>[
           ClipRRect(
-            borderRadius: new BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(20.0),
             child: speakerPhoto,
           ),
           Padding(

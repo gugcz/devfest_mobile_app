@@ -20,82 +20,82 @@ class _MainScreenState extends State<MainScreen> {
     if (_currentIndex == 0) {
       return ListView(
         children: <Widget>[
-          Card(
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Keynote',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                    child: Text(
-                      '9:00 / EN / Hall A',
-                      style: TextStyle(fontWeight: FontWeight.w400),
+          Padding(
+            padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+            child: Card(
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Keynote',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                      child: Text(
+                        '9:00 / EN / Hall A',
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           TalkCard(
-            talkName: "Why metal is so great?",
-            firstSubtitle: "Beginners / EN / 40 min",
-            secondSubtitle: "9:30 / EN / Hall A",
-            topics: List<Topic>.from([
-              Topics.android,
-              Topics.firebase,
-            ]),
-            speakerPhoto: Image(
-              image: AssetImage("assets/ozzy.jpg"),
-              height: 40.0,
-            ),
-            speakerName: "Ozzy Osbourne",
-            company: "Black Sabbath"
-          ),
+              talkName: "Why metal is so great?",
+              firstSubtitle: "Beginners / EN / 40 min",
+              secondSubtitle: "9:30 / EN / Hall A",
+              topics: List<Topic>.from([
+                Topics.android,
+                Topics.firebase,
+              ]),
+              speakerPhoto: Image(
+                image: AssetImage("assets/ozzy.jpg"),
+                height: 40.0,
+              ),
+              speakerName: "Ozzy Osbourne",
+              company: "Black Sabbath"),
           TalkCard(
-            talkName: "Widgets!",
-            secondSubtitle: "9:30 / EN / Hall B",
-            topics: List<Topic>.from([
-              Topics.android,
-              Topics.flutter,
-            ]),
-            speakerPhoto: Image(
-              image: AssetImage("assets/ozzy.jpg"),
-              height: 40.0,
-            ),
-            speakerName: "Ozzy Osbourne",
-            company: "Black Sabbath"
-          ),
+              talkName: "Widgets!",
+              secondSubtitle: "9:30 / EN / Hall B",
+              topics: List<Topic>.from([
+                Topics.android,
+                Topics.flutter,
+              ]),
+              speakerPhoto: Image(
+                image: AssetImage("assets/ozzy.jpg"),
+                height: 40.0,
+              ),
+              speakerName: "Ozzy Osbourne",
+              company: "Black Sabbath"),
           TalkCard(
-            talkName: "Widgets with Firebase!",
-            firstSubtitle: "Beginners / EN / 40 min",
-            topics: List<Topic>.from([
-              Topics.flutter,
-              Topics.firebase,
-            ]),
-            speakerPhoto: Image(
-              image: AssetImage("assets/ozzy.jpg"),
-              height: 40.0,
-            ),
-            speakerName: "Ozzy Osbourne",
-            company: "Black Sabbath"
-          ),
+              talkName: "Widgets with Firebase!",
+              firstSubtitle: "Beginners / EN / 40 min",
+              topics: List<Topic>.from([
+                Topics.flutter,
+                Topics.firebase,
+              ]),
+              speakerPhoto: Image(
+                image: AssetImage("assets/ozzy.jpg"),
+                height: 40.0,
+              ),
+              speakerName: "Ozzy Osbourne",
+              company: "Black Sabbath"),
           TalkCard(
-            talkName: "No topics!",
-            firstSubtitle: "Beginners / EN / 40 min",
-            secondSubtitle: "10:30 / EN / Hall A",
-            speakerPhoto: Image(
-              image: AssetImage("assets/ozzy.jpg"),
-              height: 40.0,
-            ),
-            speakerName: "Ozzy Osbourne",
-            company: "Black Sabbath"
-          )
+              talkName: "No topics!",
+              firstSubtitle: "Beginners / EN / 40 min",
+              secondSubtitle: "10:30 / EN / Hall A",
+              speakerPhoto: Image(
+                image: AssetImage("assets/ozzy.jpg"),
+                height: 40.0,
+              ),
+              speakerName: "Ozzy Osbourne",
+              company: "Black Sabbath")
         ],
       );
     } else if (_currentIndex == 2) {
@@ -127,7 +127,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Config.colorPalette.shade700,
+        //fixedColor: Config.colorPalette.shade700,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           if (index == 1) {
