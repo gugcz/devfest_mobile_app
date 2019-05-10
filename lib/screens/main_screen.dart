@@ -4,6 +4,7 @@ import 'package:devfest_mobile_app/components/talk_card.dart';
 import 'package:devfest_mobile_app/components/topic.dart';
 import 'package:devfest_mobile_app/entities/talk.dart';
 import 'package:devfest_mobile_app/entities/speaker.dart';
+import 'package:devfest_mobile_app/entities/company.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -49,19 +50,25 @@ class _MainScreenState extends State<MainScreen> {
           ),
           TalkCard(
             talk: Talk(
-                name: "Why metal is so great?",
-                firstSubtitle: "Beginners / EN / 40 min",
-                secondSubtitle: "9:30 / EN / Hall A",
-                description: "TBA",
-                topics: List<Topic>.from([
-                  Topics.android,
-                  Topics.firebase,
-                ]),
-                speaker: Speaker(
-                  photo: AssetImage("assets/ozzy.jpg"),
-                  name: "Ozzy Osbourne",
-                  company: "Black Sabbath",
-                )),
+              name: "Why metal is so great? Why metal is so great?",
+              firstSubtitle: "Beginners / EN / 40 min",
+              secondSubtitle: "9:30 / EN / Hall A",
+              description: "TBA",
+              topics: List<Topic>.from([
+                Topics.android,
+                Topics.firebase,
+              ]),
+              speaker: Speaker(
+                photo: AssetImage("assets/ozzy.jpg"),
+                name: "Ozzy Osbourne",
+                company: Company(
+                  name: "Black Sabbath",
+                  logo: AssetImage("assets/black-sabbath.jpg"),
+                ),
+                position: "Father of Metal",
+                bio: "Speaker bio",
+              ),
+            ),
           ),
           TalkCard(
             talk: Talk(
@@ -74,8 +81,13 @@ class _MainScreenState extends State<MainScreen> {
               ]),
               speaker: Speaker(
                 name: "Ozzy Osbourne",
-                company: "Black Sabbath",
+                company: Company(
+                  name: "Black Sabbath",
+                  logo: AssetImage("assets/black-sabbath.jpg"),
+                ),
                 photo: AssetImage("assets/ozzy.jpg"),
+                position: "Father of Metal",
+                bio: "Speaker bio",
               ),
             ),
           ),
@@ -91,7 +103,12 @@ class _MainScreenState extends State<MainScreen> {
               speaker: Speaker(
                 photo: AssetImage("assets/ozzy.jpg"),
                 name: "Ozzy Osbourne",
-                company: "Black Sabbath",
+                company: Company(
+                  name: "Black Sabbath",
+                  logo: AssetImage("assets/black-sabbath.jpg"),
+                ),
+                position: "Father of Metal",
+                bio: "Speaker bio",
               ),
             ),
           ),
@@ -103,8 +120,13 @@ class _MainScreenState extends State<MainScreen> {
               secondSubtitle: "10:30 / EN / Hall A",
               speaker: Speaker(
                 name: "Ozzy Osbourne",
-                company: "Black Sabbath",
+                company: Company(
+                  name: "Black Sabbath",
+                  logo: AssetImage("assets/black-sabbath.jpg"),
+                ),
                 photo: AssetImage("assets/ozzy.jpg"),
+                position: "Father of Metal",
+                bio: "Speaker bio",
               ),
             ),
           )

@@ -20,9 +20,9 @@ class TalkSpeakerInfo extends StatelessWidget {
   }
 
   Widget buildSpeakerCompany() {
-    if (speaker.company.length > 0) {
+    if (speaker.company != null && speaker.company.name != null && speaker.company.name.length > 0) {
       return Text(
-        speaker.company,
+        speaker.company.name,
         style: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14,

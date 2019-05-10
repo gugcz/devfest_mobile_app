@@ -64,6 +64,81 @@ class TalkDetailScreen extends StatelessWidget {
     );
   }
 
+  Widget buildSpeaker() {
+    return Padding(
+      padding: EdgeInsets.only(top: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _speakerPhoto(),
+          _speakerName(),
+          _speakerPosition(),
+          _companyLogo(),
+          _speakerBio(),
+        ],
+      ),
+    );
+  }
+
+  Widget _speakerPhoto() {
+    return Image(
+      image: talk.speaker.photo,
+      height: 128.0,
+    );
+  }
+
+  Widget _speakerName() {
+    return Padding(
+      padding: EdgeInsets.only(top: 16),
+      child: Text(
+        talk.speaker.name,
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 28),
+      ),
+    );
+  }
+
+  Widget _speakerPosition() {
+    if (talk.speaker.position != null) {
+      return Padding(
+        padding: EdgeInsets.only(top: 4),
+        child: Text(
+          talk.speaker.position,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _companyLogo() {
+    if (talk.speaker.company.logo != null) {
+      return Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: Image(
+          image: talk.speaker.company.logo,
+          height: 36.0,
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _speakerBio() {
+    if (talk.speaker.bio != null && talk.speaker.bio.length > 0) {
+      return Padding(
+        padding: EdgeInsets.only(top: 8),
+        child: Text(
+          talk.speaker.bio,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +162,7 @@ class TalkDetailScreen extends StatelessWidget {
                     buildSecondSubtitle(),
                     buildTopics(),
                     buildTalkDescription(),
+                    buildSpeaker(),
                   ],
                 ),
               ),
