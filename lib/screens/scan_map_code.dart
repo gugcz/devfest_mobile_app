@@ -6,6 +6,8 @@ import 'package:devfest_mobile_app/screens/map_screen.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:devfest_mobile_app/components/devfest_logo.dart';
+import 'package:devfest_mobile_app/components/gug_logo.dart';
 
 class ScanMapCodeScreen extends StatelessWidget {
   ScanMapCodeScreen({Key key}) : super(key: key);
@@ -21,9 +23,7 @@ class ScanMapCodeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Image(
-                  image: AssetImage("assets/devfest2019_logo.png"),
-                ),
+                DevFestLogo(),
                 Container(
                   child: Column(
                     children: <Widget>[
@@ -76,10 +76,7 @@ class ScanMapCodeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Image(
-                  image: AssetImage("assets/gug_logo.png"),
-                  height: 30,
-                ),
+                GUGLogo(),
               ],
             ),
           ),

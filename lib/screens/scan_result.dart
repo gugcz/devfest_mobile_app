@@ -1,6 +1,8 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:devfest_mobile_app/components/devfest_logo.dart';
+import 'package:devfest_mobile_app/components/gug_logo.dart';
 
 class ResultScreen extends StatelessWidget {
   final String barcode;
@@ -18,9 +20,7 @@ class ResultScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Image(
-                  image: AssetImage("assets/ozzy.png"),
-                ),
+                DevFestLogo(),
                 Container(
                   child: Column(
                     children: <Widget>[
@@ -62,10 +62,7 @@ class ResultScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Image(
-                  image: AssetImage("assets/gug_logo.png"),
-                  height: 30,
-                ),
+                GUGLogo(),
               ],
             ),
           ),

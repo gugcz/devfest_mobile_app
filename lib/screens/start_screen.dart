@@ -6,6 +6,8 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:devfest_mobile_app/screens/scan_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:devfest_mobile_app/components/devfest_logo.dart';
+import 'package:devfest_mobile_app/components/gug_logo.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -33,9 +35,7 @@ class _StartScreenState extends State<StartScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Image(
-                  image: AssetImage("assets/devfest2019_logo.png"),
-                ),
+                DevFestLogo(),
                 Container(
                   child: Column(
                     children: <Widget>[
@@ -86,10 +86,7 @@ class _StartScreenState extends State<StartScreen> {
                     ],
                   ),
                 ),
-                Image(
-                  image: AssetImage("assets/gug_logo.png"),
-                  height: 30,
-                ),
+                GUGLogo(),
               ],
             ),
           ),

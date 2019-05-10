@@ -53,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
               name: "Why metal is so great? Why metal is so great?",
               firstSubtitle: "Beginners / EN / 40 min",
               secondSubtitle: "9:30 / EN / Hall A",
-              description: "TBA",
+              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               topics: List<Topic>.from([
                 Topics.android,
                 Topics.firebase,
@@ -66,14 +66,14 @@ class _MainScreenState extends State<MainScreen> {
                   logo: AssetImage("assets/black-sabbath.jpg"),
                 ),
                 position: "Father of Metal",
-                bio: "Speaker bio",
+                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "Widgets!",
-              description: "TBA",
+              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               secondSubtitle: "9:30 / EN / Hall B",
               topics: List<Topic>.from([
                 Topics.android,
@@ -87,14 +87,14 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 photo: AssetImage("assets/ozzy.jpg"),
                 position: "Father of Metal",
-                bio: "Speaker bio",
+                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "Widgets with Firebase!",
-              description: "TBA",
+              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               firstSubtitle: "Beginners / EN / 40 min",
               topics: List<Topic>.from([
                 Topics.flutter,
@@ -108,14 +108,14 @@ class _MainScreenState extends State<MainScreen> {
                   logo: AssetImage("assets/black-sabbath.jpg"),
                 ),
                 position: "Father of Metal",
-                bio: "Speaker bio",
+                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "No topics!",
-              description: "TBA",
+              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               firstSubtitle: "Beginners / EN / 40 min",
               secondSubtitle: "10:30 / EN / Hall A",
               speaker: Speaker(
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 photo: AssetImage("assets/ozzy.jpg"),
                 position: "Father of Metal",
-                bio: "Speaker bio",
+                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           )

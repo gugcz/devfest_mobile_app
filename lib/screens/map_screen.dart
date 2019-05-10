@@ -1,5 +1,7 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
+import 'package:devfest_mobile_app/components/devfest_logo.dart';
+import 'package:devfest_mobile_app/components/gug_logo.dart';
 
 class MapScreen extends StatelessWidget {
   final String locationCode;
@@ -17,9 +19,7 @@ class MapScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Image(
-                  image: AssetImage("assets/devfest2019_logo.png"),
-                ),
+                DevFestLogo(),
                 Container(
                   child: Text(
                     'Map screen with location barcode: $locationCode.',
@@ -29,10 +29,7 @@ class MapScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Image(
-                  image: AssetImage("assets/gug_logo.png"),
-                  height: 30,
-                ),
+                GUGLogo(),
               ],
             ),
           ),
