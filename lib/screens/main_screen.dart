@@ -53,7 +53,8 @@ class _MainScreenState extends State<MainScreen> {
               name: "Why metal is so great? Why metal is so great?",
               firstSubtitle: "Beginners / EN / 40 min",
               secondSubtitle: "9:30 / EN / Hall A",
-              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
+              description:
+                  "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               topics: List<Topic>.from([
                 Topics.android,
                 Topics.firebase,
@@ -66,14 +67,16 @@ class _MainScreenState extends State<MainScreen> {
                   logo: AssetImage("assets/black-sabbath.jpg"),
                 ),
                 position: "Father of Metal",
-                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
+                bio:
+                    "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "Widgets!",
-              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
+              description:
+                  "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               secondSubtitle: "9:30 / EN / Hall B",
               topics: List<Topic>.from([
                 Topics.android,
@@ -87,14 +90,16 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 photo: AssetImage("assets/ozzy.jpg"),
                 position: "Father of Metal",
-                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
+                bio:
+                    "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "Widgets with Firebase!",
-              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
+              description:
+                  "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               firstSubtitle: "Beginners / EN / 40 min",
               topics: List<Topic>.from([
                 Topics.flutter,
@@ -108,14 +113,16 @@ class _MainScreenState extends State<MainScreen> {
                   logo: AssetImage("assets/black-sabbath.jpg"),
                 ),
                 position: "Father of Metal",
-                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
+                bio:
+                    "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           ),
           TalkCard(
             talk: Talk(
               name: "No topics!",
-              description: "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
+              description:
+                  "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               firstSubtitle: "Beginners / EN / 40 min",
               secondSubtitle: "10:30 / EN / Hall A",
               speaker: Speaker(
@@ -126,7 +133,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 photo: AssetImage("assets/ozzy.jpg"),
                 position: "Father of Metal",
-                bio: "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
+                bio:
+                    "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
           )
@@ -141,9 +149,155 @@ class _MainScreenState extends State<MainScreen> {
       );
     } else {
       return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text("This is leaderboard screen."),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '1st',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            '123456 - 25 l of water',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '2nd',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            '123458 - 20 l of water',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '3rd',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                            ),
+                          ),
+                          Text(
+                            '123457 - 15 l of water',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "You are at position",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: Text(
+                    "26",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 42,
+                    ),
+                  ),
+                ),
+                Text(
+                  "with",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                  child: Text(
+                    "2",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 36,
+                    ),
+                  ),
+                ),
+                Text(
+                  "l of water.",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       );
     }
