@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/screens/scan_map_code.dart';
 import 'package:devfest_mobile_app/components/talk_card.dart';
 import 'package:devfest_mobile_app/components/topic.dart';
+import 'package:devfest_mobile_app/components/schedule_item_card.dart';
 import 'package:devfest_mobile_app/entities/talk.dart';
 import 'package:devfest_mobile_app/entities/speaker.dart';
 import 'package:devfest_mobile_app/entities/company.dart';
+import 'package:devfest_mobile_app/entities/schedule_item.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -22,30 +24,13 @@ class _MainScreenState extends State<MainScreen> {
     if (_currentIndex == 0) {
       return ListView(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-            child: Card(
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Keynote',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                      child: Text(
-                        '9:00 / EN / Hall A',
-                        style: TextStyle(fontWeight: FontWeight.w400),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+          ScheduleItemCard(
+            item: ScheduleItem(
+              title: "Keynote",
+              time: "9:00",
+              language: "EN",
+              hall: "Hall A",
+              description: "Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote!"
             ),
           ),
           TalkCard(
