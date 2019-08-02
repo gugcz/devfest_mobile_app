@@ -86,7 +86,9 @@ class _StartScreenState extends State<StartScreen> {
                     ],
                   ),
                 ),
-                GUGLogo(),
+                GUGLogo(
+                  opacity: 0.75,
+                ),
               ],
             ),
           ),
@@ -111,7 +113,8 @@ class _StartScreenState extends State<StartScreen> {
         print('Unknown error: $e');
       }
     } on FormatException {
-      print('null (User returned using the "back"-button before scanning anything. Result)');
+      print(
+          'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
       print('Unknown error: $e');
     }
