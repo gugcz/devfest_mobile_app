@@ -3,6 +3,7 @@ import 'package:devfest_mobile_app/screens/scan_map_code.dart';
 import 'package:devfest_mobile_app/components/talk_card.dart';
 import 'package:devfest_mobile_app/components/topic.dart';
 import 'package:devfest_mobile_app/components/schedule_item_card.dart';
+import 'package:devfest_mobile_app/components/schedule_time_title.dart';
 import 'package:devfest_mobile_app/entities/talk.dart';
 import 'package:devfest_mobile_app/entities/speaker.dart';
 import 'package:devfest_mobile_app/entities/company.dart';
@@ -24,20 +25,27 @@ class _MainScreenState extends State<MainScreen> {
     if (_currentIndex == 0) {
       return ListView(
         children: <Widget>[
+          ScheduleTimeTitle(
+            hours: "9",
+            minutes: "00",
+          ),
           ScheduleItemCard(
             item: ScheduleItem(
-              title: "Keynote",
-              time: "9:00",
-              language: "EN",
-              hall: "Hall A",
-              description: "Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote!"
-            ),
+                title: "Keynote",
+                time: "9:00",
+                language: "EN",
+                hall: "Hall A",
+                description:
+                    "Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote!"),
+          ),
+          ScheduleTimeTitle(
+            hours: "9",
+            minutes: "30",
           ),
           TalkCard(
             talk: Talk(
               name: "Why metal is so great? Why metal is so great?",
-              firstSubtitle: "Beginners / EN / 40 min",
-              secondSubtitle: "9:30 / EN / Hall A",
+              subtitle: "Beginners / EN / Hall A / 40 min",
               description:
                   "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
               topics: List<Topic>.from([
@@ -62,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
               name: "Widgets!",
               description:
                   "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
-              secondSubtitle: "9:30 / EN / Hall B",
+              subtitle: "EN / Hall B",
               topics: List<Topic>.from([
                 Topics.android,
                 Topics.flutter,
@@ -80,12 +88,16 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
+          ScheduleTimeTitle(
+            hours: "10",
+            minutes: "10",
+          ),
           TalkCard(
             talk: Talk(
               name: "Widgets with Firebase!",
               description:
                   "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
-              firstSubtitle: "Beginners / EN / 40 min",
+              subtitle: "Beginners / EN / 40 min",
               topics: List<Topic>.from([
                 Topics.flutter,
                 Topics.firebase,
@@ -108,8 +120,7 @@ class _MainScreenState extends State<MainScreen> {
               name: "No topics!",
               description:
                   "Accepting payments online should be easy to implement and handy to use. Come and learn how the Google Pay API can improve your payment flow and increase conversions by offering customers tons of helpful check out tools. Join us for an overview session followed by a live demo on how quickly you can integrate Google Pay into your Android application",
-              firstSubtitle: "Beginners / EN / 40 min",
-              secondSubtitle: "10:30 / EN / Hall A",
+              subtitle: "Beginners / EN / 40 min",
               speaker: Speaker(
                 name: "Ozzy Osbourne",
                 company: Company(
@@ -122,7 +133,7 @@ class _MainScreenState extends State<MainScreen> {
                     "Jose is a Developer Programs Engineer on the Google Pay team, currently focusing on facilitating online integration of payment APIs across customers in EMEA. Previously, he worked as a technical trainer and software engineering manager on projects such as Wunderlist, ROI Training and Google Cloud.",
               ),
             ),
-          )
+          ),
         ],
       );
     } else if (_currentIndex == 2) {

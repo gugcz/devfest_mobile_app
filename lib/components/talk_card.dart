@@ -18,26 +18,12 @@ class TalkCard extends StatelessWidget {
     );
   }
 
-  Widget buildFirstSubtitle() {
-    if (talk.firstSubtitle != null) {
+  Widget buildSubtitle() {
+    if (talk.subtitle != null) {
       return Padding(
         padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
         child: Text(
-          talk.firstSubtitle,
-          style: TextStyle(fontWeight: FontWeight.w400),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
-
-  Widget buildSecondSubtitle() {
-    if (talk.secondSubtitle != null) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
-        child: Text(
-          talk.secondSubtitle,
+          talk.subtitle,
           style: TextStyle(fontWeight: FontWeight.w400),
         ),
       );
@@ -80,8 +66,7 @@ class TalkCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 buildTalkName(),
-                buildFirstSubtitle(),
-                buildSecondSubtitle(),
+                buildSubtitle(),
                 buildTopics(),
                 TalkSpeakerInfo(speaker: talk.speaker),
               ],

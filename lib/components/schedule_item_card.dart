@@ -34,7 +34,7 @@ class ScheduleItemCard extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 6, 0, 0),
                   child: Text(
-                    item.time + " / " + item.language + " / " + item.hall,
+                    item.language + " / " + item.hall,
                     style: TextStyle(fontWeight: FontWeight.w400),
                   ),
                 )

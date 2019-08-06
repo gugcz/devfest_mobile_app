@@ -5,16 +5,14 @@ import 'package:devfest_mobile_app/entities/speaker.dart';
 
 class Talk {
   final String name;
-  final String firstSubtitle;
-  final String secondSubtitle;
+  final String subtitle;
   final List<Topic> topics;
   final String description;
   final Speaker speaker;
 
   Talk({
     this.name,
-    this.firstSubtitle,
-    this.secondSubtitle,
+    this.subtitle,
     this.topics,
     @required this.description,
     @required this.speaker,

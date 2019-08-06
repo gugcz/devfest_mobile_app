@@ -19,21 +19,10 @@ class TalkDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFirstSubtitle() {
-    if (talk.firstSubtitle != null && talk.firstSubtitle.length > 0) {
+  Widget buildSubtitle() {
+    if (talk.subtitle != null && talk.subtitle.length > 0) {
       return Text(
-        talk.firstSubtitle,
-        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-      );
-    } else {
-      return Container();
-    }
-  }
-
-  Widget buildSecondSubtitle() {
-    if (talk.secondSubtitle != null && talk.secondSubtitle.length > 0) {
-      return Text(
-        talk.secondSubtitle,
+        talk.subtitle,
         style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
       );
     } else {
@@ -158,8 +147,7 @@ class TalkDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     buildTalkName(),
-                    buildFirstSubtitle(),
-                    buildSecondSubtitle(),
+                    buildSubtitle(),
                     buildTopics(),
                     buildTalkDescription(),
                     buildSpeaker(),
