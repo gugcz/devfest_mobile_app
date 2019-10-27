@@ -1,7 +1,7 @@
 import 'package:devfest_mobile_app/config.dart';
-import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/utils/token_file.dart';
+import 'package:devfest_mobile_app/components/decide_auth.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -17,13 +17,12 @@ class MyApp extends StatelessWidget {
       ),
       home: FutureBuilder(
         builder: (context, projectSnap) {
-          if (projectSnap.connectionState == ConnectionState.none && projectSnap.hasData == null) {
-            //print('project snapshot data is: ${projectSnap.data}');
+          if (projectSnap.hasData == null) {
             return Container();
-          } else if (projectSnap.data.userNumber == '' && projectSnap.data.token == '') {
+          } else if (projectSnap.data.isEmpty()) {
             return StartScreen();
           } else {
-            return MainScreen();
+            return DecideAuth(projectSnap.data);
           }
         },
         future: TokenFile.readToken(),

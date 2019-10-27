@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 import 'package:devfest_mobile_app/utils/token_file.dart';
 import 'package:http/http.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -14,6 +16,9 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  
   @override
   initState() {
     super.initState();
@@ -104,7 +109,17 @@ class _StartScreenState extends State<StartScreen> {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['data']['type'] == 'token') {
-          TokenFile.writeToken(Credentials(numberFieldController.text, data['data']['token']));          
+          TokenFile.writeToken(Credentials(numberFieldController.text, data['data']['token']));
+          _auth.signInWithCustomToken(token: data['data']['token'])
+            .then((result) {
+              print(result);
+              if (result.user != null) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+              }
+            })
+            .catchError((error) {
+              print(error.toString());
+            });
         }
       }
     } catch (exception) {

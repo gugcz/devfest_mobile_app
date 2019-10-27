@@ -32,4 +32,8 @@ class Credentials {
   String userNumber, token;
 
   Credentials(this.userNumber, this.token);
+
+  bool isEmpty() {
+    return this.userNumber == '' || this.token == '';
+  }
 }
