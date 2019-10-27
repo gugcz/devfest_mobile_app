@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
+import 'package:devfest_mobile_app/utils/token_file.dart';
 import 'package:http/http.dart';
 
 class StartScreen extends StatefulWidget {
@@ -14,8 +14,6 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  bool _isLoading = false;
-
   @override
   initState() {
     super.initState();
@@ -99,19 +97,18 @@ class _StartScreenState extends State<StartScreen> {
 
   _login() async {
     var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
-    String result;
     try {
       var response = await post(url, body: {
         'number': numberFieldController.text,
       });
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        result = data['data']['message'];
+        if (data['data']['type'] == 'token') {
+          TokenFile.writeToken(Credentials(numberFieldController.text, data['data']['token']));          
+        }
       }
     } catch (exception) {
       print(exception);
     }
-
-    print(result);
   }
 }
