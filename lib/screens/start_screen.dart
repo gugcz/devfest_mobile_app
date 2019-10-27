@@ -1,7 +1,10 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
+import 'package:http/http.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -11,11 +14,19 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  String barcode = "";
+  bool _isLoading = false;
 
   @override
   initState() {
     super.initState();
+  }
+
+  final numberFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    numberFieldController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,18 +61,19 @@ class _StartScreenState extends State<StartScreen> {
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 25),
+                            controller: numberFieldController,
                           ),
                         ),
                       ),
                       OutlineButton(
                         child: Text(
-                          "Enter",
+                          "Login",
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Config.colorPalette.shade50,
                         splashColor: Config.colorPalette.shade100,
                         highlightColor: Config.colorPalette.shade100,
-                        onPressed: () {},
+                        onPressed: _login,
                         borderSide: BorderSide(
                           color: Colors.white,
                           width: 1,
@@ -83,5 +95,23 @@ class _StartScreenState extends State<StartScreen> {
       ),
       resizeToAvoidBottomInset: false,
     );
+  }
+
+  _login() async {
+    var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
+    String result;
+    try {
+      var response = await post(url, body: {
+        'number': numberFieldController.text,
+      });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        result = data['data']['message'];
+      }
+    } catch (exception) {
+      print(exception);
+    }
+
+    print(result);
   }
 }
