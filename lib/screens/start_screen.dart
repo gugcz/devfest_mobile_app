@@ -1,13 +1,13 @@
-import 'dart:async';
-
+import 'dart:convert';
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:devfest_mobile_app/screens/scan_result.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
+import 'package:devfest_mobile_app/utils/token_file.dart';
+import 'package:http/http.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -17,106 +17,157 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  String barcode = "";
+  bool loading = false;
+  String error = "";
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final numberFieldController = TextEditingController();
 
   @override
-  initState() {
-    super.initState();
+  void dispose() {
+    numberFieldController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Config.colorPalette.shade500,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(50, 100, 50, 40),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                DevFestLogo(),
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'To participate in game you have to scan your QR code that is located at the back of your badge.',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+    return loading
+        ? LoadingScreen()
+        : Scaffold(
+            backgroundColor: Config.colorPalette.shade500,
+            body: Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(30, 100, 30, 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(children: <Widget>[
+                      DevFestLogo(),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
-                        child: OutlineButton(
-                          child: Text(
-                            "Scan",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: Config.colorPalette.shade50,
-                          splashColor: Config.colorPalette.shade100,
-                          highlightColor: Config.colorPalette.shade100,
-                          onPressed: scan,
-                          borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 1,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(7.0),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Continue without login',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
+                        padding: EdgeInsets.only(top: 30),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Enter code located at the back of your badge.',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                          );
-                        },
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: Container(
+                                width: 100,
+                                child: TextField(
+                                  maxLength: 4,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 25),
+                                  controller: numberFieldController,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              error,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: OutlineButton(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Config.colorPalette.shade50,
+                                splashColor: Config.colorPalette.shade100,
+                                highlightColor: Config.colorPalette.shade100,
+                                onPressed: _login,
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(7.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ]),
+                    GUGLogo(
+                      opacity: 0.75,
+                    ),
+                  ],
                 ),
-                GUGLogo(
-                  opacity: 0.75,
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+            resizeToAvoidBottomInset: false,
+          );
   }
 
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultScreen(barcode: barcode),
-        ),
-      );
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        print('The user did not grant the camera permission!');
-      } else {
-        print('Unknown error: $e');
+  _login() async {
+    if (numberFieldController.text.length == 4) {
+      setState(() {
+        loading = true;
+        error = "";
+      });
+
+      var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
+      try {
+        var response = await post(url, body: {
+          'number': numberFieldController.text,
+        });
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          if (data['data']['type'] == 'token') {
+            TokenFile.writeToken(
+                Credentials(numberFieldController.text, data['data']['token']));
+            _auth
+                .signInWithCustomToken(token: data['data']['token'])
+                .then((result) {
+              if (result.user != null) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MainScreen()));
+              } else {
+                setState(() {
+                  loading = false;
+                  error = "Unable to authenticate user.";
+                });
+              }
+            }).catchError((error) {
+              setState(() {
+                loading = false;
+                error = "Error authenticating user.";
+              });
+            });
+          } else {
+            setState(() {
+              loading = false;
+              error = data['data']['message'];
+            });
+          }
+        } else {
+          setState(() {
+            loading = false;
+            error = "Server error.";
+          });
+        }
+      } catch (exception) {
+        print(exception);
+        setState(() {
+          loading = false;
+          error = "Unable to contact server.";
+        });
       }
-    } on FormatException {
-      print(
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      print('Unknown error: $e');
+    } else {
+      setState(() {
+        error = "Please enter all 4 digits of your number.";
+      });
     }
   }
 }
