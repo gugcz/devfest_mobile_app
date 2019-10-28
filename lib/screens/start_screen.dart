@@ -18,6 +18,7 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
   bool loading = false;
+  String error = "";
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -67,21 +68,31 @@ class _StartScreenState extends State<StartScreen> {
                                 ),
                               ),
                             ),
-                            OutlineButton(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(color: Colors.white),
+                            Text(
+                              error,
+                              style: TextStyle(
+                                color: Colors.red,
                               ),
-                              color: Config.colorPalette.shade50,
-                              splashColor: Config.colorPalette.shade100,
-                              highlightColor: Config.colorPalette.shade100,
-                              onPressed: _login,
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                                width: 1,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(7.0),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: OutlineButton(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Config.colorPalette.shade50,
+                                splashColor: Config.colorPalette.shade100,
+                                highlightColor: Config.colorPalette.shade100,
+                                onPressed: _login,
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                  width: 1,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(7.0),
+                                ),
                               ),
                             ),
                           ],
@@ -100,43 +111,62 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   _login() async {
-    setState(() {
-      loading = true;
-    });
-    var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
-    try {
-      var response = await post(url, body: {
-        'number': numberFieldController.text,
+    if (numberFieldController.text.length == 4) {
+      setState(() {
+        loading = true;
+        error = "";
       });
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        if (data['data']['type'] == 'token') {
-          TokenFile.writeToken(
-              Credentials(numberFieldController.text, data['data']['token']));
-          _auth
-              .signInWithCustomToken(token: data['data']['token'])
-              .then((result) {
-            print(result);
-            if (result.user != null) {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => MainScreen()));
-            } else {
+
+      var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
+      try {
+        var response = await post(url, body: {
+          'number': numberFieldController.text,
+        });
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          if (data['data']['type'] == 'token') {
+            TokenFile.writeToken(
+                Credentials(numberFieldController.text, data['data']['token']));
+            _auth
+                .signInWithCustomToken(token: data['data']['token'])
+                .then((result) {
+              if (result.user != null) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MainScreen()));
+              } else {
+                setState(() {
+                  loading = false;
+                  error = "Unable to authenticate user.";
+                });
+              }
+            }).catchError((error) {
               setState(() {
                 loading = false;
+                error = "Error authenticating user.";
               });
-            }
-          }).catchError((error) {
-            print(error.toString());
+            });
+          } else {
             setState(() {
               loading = false;
+              error = data['data']['message'];
             });
+          }
+        } else {
+          setState(() {
+            loading = false;
+            error = "Server error.";
           });
         }
+      } catch (exception) {
+        print(exception);
+        setState(() {
+          loading = false;
+          error = "Unable to contact server.";
+        });
       }
-    } catch (exception) {
-      print(exception);
+    } else {
       setState(() {
-        loading = false;
+        error = "Please enter all 4 digits of your number.";
       });
     }
   }
