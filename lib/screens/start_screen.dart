@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
@@ -16,13 +17,9 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  
+  bool loading = false;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  
-  @override
-  initState() {
-    super.initState();
-  }
 
   final numberFieldController = TextEditingController();
 
@@ -34,73 +31,78 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Config.colorPalette.shade500,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 100, 30, 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Column(children: <Widget>[
-                DevFestLogo(),
-                Padding(
-                  padding: EdgeInsets.only(top: 30),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Enter code located at the back of your badge.',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+    return loading
+        ? LoadingScreen()
+        : Scaffold(
+            backgroundColor: Config.colorPalette.shade500,
+            body: Center(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(30, 100, 30, 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(children: <Widget>[
+                      DevFestLogo(),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Container(
-                          width: 100,
-                          child: TextField(
-                            maxLength: 4,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 25),
-                            controller: numberFieldController,
-                          ),
+                        padding: EdgeInsets.only(top: 30),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              'Enter code located at the back of your badge.',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: Container(
+                                width: 100,
+                                child: TextField(
+                                  maxLength: 4,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 25),
+                                  controller: numberFieldController,
+                                ),
+                              ),
+                            ),
+                            OutlineButton(
+                              child: Text(
+                                "Login",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: Config.colorPalette.shade50,
+                              splashColor: Config.colorPalette.shade100,
+                              highlightColor: Config.colorPalette.shade100,
+                              onPressed: _login,
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(7.0),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      OutlineButton(
-                        child: Text(
-                          "Login",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Config.colorPalette.shade50,
-                        splashColor: Config.colorPalette.shade100,
-                        highlightColor: Config.colorPalette.shade100,
-                        onPressed: _login,
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 1,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(7.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ]),
+                    GUGLogo(
+                      opacity: 0.75,
+                    ),
+                  ],
                 ),
-              ]),
-              GUGLogo(
-                opacity: 0.75,
               ),
-            ],
-          ),
-        ),
-      ),
-      resizeToAvoidBottomInset: false,
-    );
+            ),
+            resizeToAvoidBottomInset: false,
+          );
   }
 
   _login() async {
+    setState(() {
+      loading = true;
+    });
     var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
     try {
       var response = await post(url, body: {
@@ -109,21 +111,33 @@ class _StartScreenState extends State<StartScreen> {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['data']['type'] == 'token') {
-          TokenFile.writeToken(Credentials(numberFieldController.text, data['data']['token']));
-          _auth.signInWithCustomToken(token: data['data']['token'])
-            .then((result) {
-              print(result);
-              if (result.user != null) {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
-              }
-            })
-            .catchError((error) {
-              print(error.toString());
+          TokenFile.writeToken(
+              Credentials(numberFieldController.text, data['data']['token']));
+          _auth
+              .signInWithCustomToken(token: data['data']['token'])
+              .then((result) {
+            print(result);
+            if (result.user != null) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => MainScreen()));
+            } else {
+              setState(() {
+                loading = false;
+              });
+            }
+          }).catchError((error) {
+            print(error.toString());
+            setState(() {
+              loading = false;
             });
+          });
         }
       }
     } catch (exception) {
       print(exception);
+      setState(() {
+        loading = false;
+      });
     }
   }
 }
