@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/screens/scan_map_code.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key, this.title}) : super(key: key);
@@ -20,6 +21,11 @@ class _MainScreenState extends State<MainScreen> {
         children: <Widget>[
           Text("This is inventory screen."),
         ],
+      );
+    } else if (_currentIndex == 1) {
+      return WebView(
+        initialUrl: 'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
+        javascriptMode: JavascriptMode.unrestricted,
       );
     } else {
       return Column(
@@ -192,18 +198,9 @@ class _MainScreenState extends State<MainScreen> {
         //fixedColor: Config.colorPalette.shade700,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ScanMapCodeScreen(),
-              ),
-            );
-          } else {
-            setState(() {
-              _currentIndex = index;
-            });
-          }
+          setState(() {
+            _currentIndex = index;
+          });
         },
         // new
         currentIndex: _currentIndex,
