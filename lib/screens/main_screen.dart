@@ -1,4 +1,5 @@
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/screens/question_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your onPressed code here!
+          Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen()));
         },
         child: Icon(Icons.photo_camera),
         backgroundColor: Colors.blue,
