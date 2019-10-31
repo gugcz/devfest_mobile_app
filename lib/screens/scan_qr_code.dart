@@ -1,16 +1,14 @@
 import 'dart:async';
 
 import 'package:devfest_mobile_app/config.dart';
-import 'package:devfest_mobile_app/screens/main_screen.dart';
-import 'package:devfest_mobile_app/screens/map_screen.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 
-class ScanMapCodeScreen extends StatelessWidget {
-  ScanMapCodeScreen({Key key}) : super(key: key);
+class ScanQRCodeScreen extends StatelessWidget {
+  ScanQRCodeScreen({Key key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class ScanMapCodeScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'Scan nearest location barcode to show your location on map.',
+                        'Find game QR code, scan it and answer question!',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -55,24 +53,7 @@ class ScanMapCodeScreen extends StatelessWidget {
                             borderRadius: new BorderRadius.circular(7.0),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'Continue without location',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
-                            ),
-                          );
-                        },
-                      ),
+                      ),                      
                     ],
                   ),
                 ),
@@ -88,12 +69,7 @@ class ScanMapCodeScreen extends StatelessWidget {
   Future scan(context) async {
     try {
       String locationCode = await BarcodeScanner.scan();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MapScreen(locationCode: locationCode),
-        ),
-      );
+      
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         print('The user did not grant the camera permission!');

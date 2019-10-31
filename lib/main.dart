@@ -1,7 +1,6 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:devfest_mobile_app/screens/question_screen.dart';
-import 'package:devfest_mobile_app/screens/scan_map_code.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/utils/token_file.dart';

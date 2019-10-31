@@ -1,5 +1,6 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/question_screen.dart';
+import 'package:devfest_mobile_app/screens/scan_qr_code.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -66,10 +67,7 @@ class _MainScreenState extends State<MainScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => QuestionScreen(
-                number: this.number,
-                questionId: 123,
-              ),
+              builder: (context) => ScanQRCodeScreen(),
             ),
           );
         },
