@@ -3,15 +3,21 @@ import 'package:devfest_mobile_app/screens/question_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key key, this.title}) : super(key: key);
+  final String number;
+  MainScreen({Key key, this.title, this.number}) : super(key: key);
 
   final String title;
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenState createState() => _MainScreenState(this.number);
 }
 
 class _MainScreenState extends State<MainScreen> {
+
+  final String number;
+
+  _MainScreenState(this.number);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +63,15 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionScreen()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QuestionScreen(
+                number: this.number,
+                questionId: 123,
+              ),
+            ),
+          );
         },
         child: Icon(Icons.photo_camera),
         backgroundColor: Colors.blue,
