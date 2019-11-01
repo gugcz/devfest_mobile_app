@@ -1,6 +1,4 @@
 import 'package:devfest_mobile_app/config.dart';
-import 'package:devfest_mobile_app/screens/main_screen.dart';
-import 'package:devfest_mobile_app/screens/question_screen.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/utils/token_file.dart';
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         accentColor: Color(0xFFFFFFFFFF),
       ),
-      home: MainScreen()/*FutureBuilder(
+      home: FutureBuilder(
         builder: (context, projectSnap) {
           if (projectSnap.data == null) {
             return LoadingScreen();
@@ -29,7 +27,7 @@ class MyApp extends StatelessWidget {
           }
         },
         future: TokenFile.readToken(),
-      ),*/
+      ),
     );
   }
 }

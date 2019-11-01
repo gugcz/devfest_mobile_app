@@ -14,11 +14,12 @@ class DecideAuth extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       builder: (context, projectSnap) {
+        print(credentials.token);
         if (projectSnap.data == null) {
           return LoadingScreen();
         } else {
           if (projectSnap.data.user != null) {
-            return MainScreen();
+            return MainScreen(number: credentials.userNumber);
           } else {
             return StartScreen();
           }

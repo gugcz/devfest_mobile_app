@@ -29,9 +29,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
-    print('Init state.');
-    print(this.questionId);
-    print(this.number);
     _loadQuestion();
   }
 
