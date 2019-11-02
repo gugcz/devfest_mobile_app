@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
-import 'package:devfest_mobile_app/utils/token_file.dart';
+import 'package:devfest_mobile_app/utils/credentials_file.dart';
 import 'package:http/http.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -99,9 +101,7 @@ class _StartScreenState extends State<StartScreen> {
                         ),
                       ),
                     ]),
-                    GUGLogo(
-                      opacity: 0.75,
-                    ),
+                    GUGLogo(),
                   ],
                 ),
               ),
@@ -125,12 +125,13 @@ class _StartScreenState extends State<StartScreen> {
         if (response.statusCode == 200) {
           var data = jsonDecode(response.body);
           if (data['data']['type'] == 'token') {
-            TokenFile.writeToken(
+            CredentialsFile.writeCredentials(
                 Credentials(numberFieldController.text, data['data']['token']));
             _auth
                 .signInWithCustomToken(token: data['data']['token'])
                 .then((result) {
               if (result.user != null) {
+                Provider.of<UIDModel>(context, listen: false).setUID(numberFieldController.text);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => MainScreen()));
               } else {
