@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:http/http.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
@@ -63,136 +62,122 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final double itemWidth = 150;
-    final double itemHeight = 75;
+    final double itemHeight = 65;
 
-    return loading
-        ? LoadingScreen()
-        : Scaffold(
-            backgroundColor: Config.colorPalette.shade500,
-            body: Center(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 100, 30, 40),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          question.question,
-                          style: TextStyle(
-                            fontSize: 22,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        GridView.count(
-                          crossAxisCount: 2,
-                          padding: EdgeInsets.only(top: 40),
-                          shrinkWrap: true,
-                          childAspectRatio: (itemWidth / itemHeight),
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                              child: OutlineButton(
-                                child: Text(
-                                  question.answer1,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                color: Config.colorPalette.shade50,
-                                splashColor: Config.colorPalette.shade100,
-                                highlightColor: Config.colorPalette.shade100,
-                                onPressed: () {},
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                  width: 1,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(7.0),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                              child: OutlineButton(
-                                child: Text(
-                                  question.answer2,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                color: Config.colorPalette.shade50,
-                                splashColor: Config.colorPalette.shade100,
-                                highlightColor: Config.colorPalette.shade100,
-                                onPressed: () {},
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                  width: 1,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(7.0),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                              child: OutlineButton(
-                                child: Text(
-                                  question.answer3,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                color: Config.colorPalette.shade50,
-                                splashColor: Config.colorPalette.shade100,
-                                highlightColor: Config.colorPalette.shade100,
-                                onPressed: () {},
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                  width: 1,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(7.0),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
-                              child: OutlineButton(
-                                child: Text(
-                                  question.answer4,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                color: Config.colorPalette.shade50,
-                                splashColor: Config.colorPalette.shade100,
-                                highlightColor: Config.colorPalette.shade100,
-                                onPressed: () {},
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                  width: 1,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(7.0),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+    return Scaffold(
+      backgroundColor: Config.colorPalette.shade500,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(30, 100, 30, 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Question Question Question Question Question Question Question?",
+                    style: TextStyle(
+                      fontSize: 22,
                     ),
-                    GUGLogo(),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                  ),
+                  GridView.count(
+                    crossAxisCount: 2,
+                    padding: EdgeInsets.only(top: 40),
+                    shrinkWrap: true,
+                    childAspectRatio: (itemWidth / itemHeight),
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: OutlineButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: () {},
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                        child: OutlineButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: () {},
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: OutlineButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: () {},
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                        child: OutlineButton(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: () {},
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-            resizeToAvoidBottomInset: false,
-          );
+              GUGLogo(),
+            ],
+          ),
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+    );
   }
 }
