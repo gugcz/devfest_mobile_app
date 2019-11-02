@@ -1,5 +1,7 @@
+import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/screens/scan_qr_code.dart';
 import 'package:flutter/material.dart';
-import 'package:devfest_mobile_app/screens/scan_map_code.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MainScreen extends StatefulWidget {
@@ -14,171 +16,122 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
+  Widget _decideBottomNavigation() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      onTap: (index) {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      currentIndex: _currentIndex,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.business_center,
+          ),
+          title: Text(
+            'Inventory',
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.map,
+          ),
+          title: Text(
+            'Map',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _decideFloatingActionButton() {
+    return _currentIndex == 0
+        ? FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ScanQRCodeScreen(),
+                ),
+              );
+            },
+            child: Icon(Icons.photo_camera),
+            backgroundColor: Colors.blue,
+          )
+        : null;
+  }
+
   Widget decideView() {
     if (_currentIndex == 0) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("This is inventory screen."),
-        ],
-      );
-    } else if (_currentIndex == 1) {
-      return WebView(
-        initialUrl: 'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
-        javascriptMode: JavascriptMode.unrestricted,
-      );
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '1st',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            '123456 - 25 l of water',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
+      return StreamBuilder(
+        builder: (context, projectSnap) {
+          if (projectSnap.hasData) {
+            return Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Your score:",
+                    style: TextStyle(fontSize: 36),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                      bottom: 20,
+                    ),
+                    child: Text(
+                      projectSnap.data['totalScore'].toString(),
+                      style: TextStyle(fontSize: 64),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '2nd',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            '123458 - 20 l of water',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
+                  Text(
+                    "litres of water",
+                    style: TextStyle(fontSize: 26),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 50, 50, 30),
+                    child: Text(
+                      "Scan more QR codes and answer question to receive more points!",
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                  child: Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '3rd',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            '123457 - 15 l of water',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Column(
+            );
+          } else {
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "You are at position",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: Text(
-                    "26",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 42,
-                    ),
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(),
                   ),
                 ),
                 Text(
-                  "with",
+                  'Loading',
                   style: TextStyle(
-                    fontSize: 20,
+                    color: Colors.white,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
-                  child: Text(
-                    "2",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 36,
-                    ),
-                  ),
-                ),
-                Text(
-                  "l of water.",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                )
               ],
-            ),
-          ),
-        ],
+            );
+          }
+        },
+        stream:
+            Firestore.instance.collection('users').document('1234').snapshots(),
+      );
+    } else {
+      return WebView(
+        initialUrl:
+            'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
+        javascriptMode: JavascriptMode.unrestricted,
       );
     }
   }
@@ -186,52 +139,16 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Config.colorPalette.shade500,
       appBar: AppBar(
         title: Text('DevFest CZ 2019'),
+        backgroundColor: Config.colorPalette.shade700,
       ),
       body: Center(
-        child: Container(
-          child: decideView(),
-        ),
+        child: decideView(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        //fixedColor: Config.colorPalette.shade700,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        // new
-        currentIndex: _currentIndex,
-        // new
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.business_center,
-            ),
-            title: Text(
-              'Inventory',
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.map,
-            ),
-            title: Text(
-              'Map',
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.dashboard,
-            ),
-            title: Text(
-              'Leaderboard',
-            ),
-          ),
-        ],
-      ),
+      bottomNavigationBar: _decideBottomNavigation(),
+      floatingActionButton: _decideFloatingActionButton(),
     );
   }
 }
