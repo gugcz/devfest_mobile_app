@@ -19,7 +19,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CredentialsFile.writeCredentials(Credentials('', ''));
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Config.colorPalette,
