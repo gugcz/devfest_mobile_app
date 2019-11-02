@@ -99,9 +99,7 @@ class _StartScreenState extends State<StartScreen> {
                         ),
                       ),
                     ]),
-                    GUGLogo(
-                      opacity: 0.75,
-                    ),
+                    GUGLogo(),
                   ],
                 ),
               ),

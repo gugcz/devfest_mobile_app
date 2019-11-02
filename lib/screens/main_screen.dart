@@ -145,7 +145,39 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: Config.colorPalette.shade700,
       ),
       body: Center(
-        child: decideView(),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Your score:",
+                style: TextStyle(fontSize: 36),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: Text(
+                  "26",
+                  style: TextStyle(fontSize: 64),
+                ),
+              ),
+              Text(
+                "litres of water",
+                style: TextStyle(fontSize: 26),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(30, 50, 50, 30),
+                child: Text(
+                  "Scan more QR codes and answer question to receive more points!",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: _decideBottomNavigation(),
       floatingActionButton: _decideFloatingActionButton(),
