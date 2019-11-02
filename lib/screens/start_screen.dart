@@ -132,6 +132,10 @@ class _StartScreenState extends State<StartScreen> {
                   new FlatButton(
                     child: Text("Back"),
                     onPressed: () {
+                      setState(() {
+                        loading = false;
+                        error = "";
+                      });
                       Navigator.of(context).pop();
                     },
                   ),
