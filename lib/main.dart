@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             return StartScreen();
           } else {
             Provider.of<UIDModel>(context, listen: false)
-                .setUID(projectSnap.data.number);
+                .setUID(projectSnap.data.userNumber);
             return DecideAuth(projectSnap.data);
           }
         },
