@@ -1,8 +1,10 @@
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:devfest_mobile_app/screens/scan_qr_code.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   final String number;
@@ -68,67 +70,73 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _decideView() {
     if (_currentIndex == 0) {
-      return StreamBuilder(
-        builder: (context, projectSnap) {
-          if (projectSnap.hasData) {
-            return Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Your score:",
-                    style: TextStyle(fontSize: 36),
+      return Consumer<UIDModel>(
+        builder: (context, model, child) {
+          return StreamBuilder(
+            builder: (context, projectSnap) {
+              if (projectSnap.hasData) {
+                return Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Your score:",
+                        style: TextStyle(fontSize: 36),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 20,
+                          bottom: 20,
+                        ),
+                        child: Text(
+                          projectSnap.data['totalScore'].toString(),
+                          style: TextStyle(fontSize: 64),
+                        ),
+                      ),
+                      Text(
+                        "litres of water",
+                        style: TextStyle(fontSize: 26),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(30, 50, 50, 30),
+                        child: Text(
+                          "Scan more QR codes and answer question to receive more points!",
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 20,
-                      bottom: 20,
+                );
+              } else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
-                    child: Text(
-                      projectSnap.data['totalScore'].toString(),
-                      style: TextStyle(fontSize: 64),
-                    ),
-                  ),
-                  Text(
-                    "litres of water",
-                    style: TextStyle(fontSize: 26),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(30, 50, 50, 30),
-                    child: Text(
-                      "Scan more QR codes and answer question to receive more points!",
-                      style: TextStyle(fontSize: 18),
+                    Text(
+                      'Loading',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                       textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-                Text(
-                  'Loading',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            );
-          }
+                  ],
+                );
+              }
+            },
+            stream: Firestore.instance
+                .collection('users')
+                .document(model.getUID())
+                .snapshots(),
+          );
         },
-        stream:
-            Firestore.instance.collection('users').document('1234').snapshots(),
       );
     } else {
       return WebView(

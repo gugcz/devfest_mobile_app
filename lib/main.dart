@@ -1,11 +1,20 @@
 import 'package:devfest_mobile_app/config.dart';
+import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
-import 'package:devfest_mobile_app/utils/token_file.dart';
+import 'package:devfest_mobile_app/utils/credentials_file.dart';
 import 'package:devfest_mobile_app/components/decide_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      builder: (context) => UIDModel(),
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -23,10 +32,12 @@ class MyApp extends StatelessWidget {
           } else if (projectSnap.data.isEmpty()) {
             return StartScreen();
           } else {
+            Provider.of<UIDModel>(context, listen: false)
+                .setUID(projectSnap.data.number);
             return DecideAuth(projectSnap.data);
           }
         },
-        future: TokenFile.readToken(),
+        future: CredentialsFile.readCredentials(),
       ),
     );
   }

@@ -4,6 +4,8 @@ import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 import 'package:devfest_mobile_app/entities/question.dart';
+import 'package:devfest_mobile_app/models/uid_model.dart';
+import 'package:provider/provider.dart';
 
 class QuestionScreen extends StatefulWidget {
   final int questionId;
@@ -36,7 +38,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         'https://us-central1-devfestcztest.cloudfunctions.net/loadQuestion';
     try {
       var response = await post(url, body: {
-        'number': '1234',
+        'number': Provider.of<UIDModel>(context, listen: false).getUID(),
         'questionId': '101',
       });
       if (response.statusCode == 200) {

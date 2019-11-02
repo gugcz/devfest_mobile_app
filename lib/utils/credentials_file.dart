@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-class TokenFile {
-  static Future<File> writeToken(Credentials credentials) async {
+class CredentialsFile {
+  static Future<File> writeCredentials(Credentials credentials) async {
     final file = await _localFile;
     return file.writeAsString(credentials.userNumber + '\n' + credentials.token);
   }
 
-  static Future<Credentials> readToken() async {
+  static Future<Credentials> readCredentials() async {
     try {
       final file = await _localFile;
       var lines = (await file.readAsString()).split('\n');
