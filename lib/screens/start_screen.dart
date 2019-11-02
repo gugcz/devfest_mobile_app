@@ -125,9 +125,9 @@ class _StartScreenState extends State<StartScreen> {
           builder: (BuildContext context) {
             return AlertDialog(
                 title: new Text("Sign in"),
-                content: new Text("Number" +
+                content: new Text("Number " +
                     numberFieldController.text +
-                    "will be locked for this phone"),
+                    " will get locked for this phone"),
                 actions: <Widget>[
                   new FlatButton(
                     child: Text("Back"),
