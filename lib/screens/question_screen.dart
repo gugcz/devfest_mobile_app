@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:devfest_mobile_app/screens/correct_answer_screen.dart';
+import 'package:devfest_mobile_app/screens/wrong_answer_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:http/http.dart';
 import 'package:devfest_mobile_app/config.dart';
@@ -98,7 +100,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(1);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -118,7 +122,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(2);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -138,7 +144,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(3);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -158,7 +166,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(4);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -178,5 +188,50 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
             resizeToAvoidBottomInset: false,
           );
+  }
+
+  _sendAnswer(int answer) async {
+    setState(() {
+      loading = true;
+    });
+
+    var url =
+        'https://us-central1-devfestcztest.cloudfunctions.net/answerQuestion';
+    try {
+      var response = await post(url, body: {
+        'number': Provider.of<UIDModel>(context, listen: false).getUID(),
+        'questionId': this.questionId,
+        'answer': answer.toString()
+      });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data['data']['type'] == 'correctAnswer') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CorrectAnswerScreen(
+                pointsEarned: data['data']['pointsEarned'],
+              ),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WrongAnswerScreen(),
+            ),
+          );
+        }
+      } else {
+        setState(() {
+          loading = false;
+        });
+      }
+    } catch (exception) {
+      print(exception);
+      setState(() {
+        loading = false;
+      });
+    }
   }
 }
