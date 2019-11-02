@@ -44,8 +44,6 @@ flutter:
   assets:
   - assets/devfest2019_logo.png
   - assets/gug_logo.png
-  - assets/ozzy.jpg
-  - assets/black-sabbath.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
