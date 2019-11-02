@@ -19,6 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _decideBottomNavigation() {
     return BottomNavigationBar(
+      backgroundColor: Config.colorPalette.shade800,
       type: BottomNavigationBarType.fixed,
       onTap: (index) {
         setState(() {
@@ -59,7 +60,8 @@ class _MainScreenState extends State<MainScreen> {
               );
             },
             child: Icon(Icons.photo_camera),
-            backgroundColor: Colors.blue,
+            backgroundColor: Config.colorPalette.shade800,
+            foregroundColor: Colors.white,
           )
         : null;
   }
@@ -143,7 +145,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Config.colorPalette.shade500,
       appBar: AppBar(
         title: Text('DevFest CZ 2019'),
-        backgroundColor: Config.colorPalette.shade700,
+        backgroundColor: Config.colorPalette.shade800,
       ),
       body: Center(
         child: _decideView(),
