@@ -24,8 +24,6 @@ class _StartScreenState extends State<StartScreen> {
   bool loading = false;
   String error = "";
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final numberFieldController = TextEditingController();
 
   final Auth auth = Auth();
@@ -147,6 +145,8 @@ class _StartScreenState extends State<StartScreen> {
                             int.parse(numberFieldController.text));
                         Provider.of<UIDModel>(context, listen: false)
                             .setUID(uuid);
+                        Provider.of<UIDModel>(context, listen: false)
+                            .setNumberBadge(int.parse(numberFieldController.text));
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
