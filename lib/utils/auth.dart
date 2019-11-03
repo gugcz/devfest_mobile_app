@@ -35,6 +35,9 @@ class Auth {
           'actualScore': 0,
           'totalScore': 0
         });
+        await _firestore.collection('numberOnBadges').document(numberBadge.toString()).updateData({
+          'isUsed': true
+        });
         return uuid;
       }
     }

@@ -161,55 +161,6 @@ class _StartScreenState extends State<StartScreen> {
                   )
                 ]);
           });
-
-      // var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
-      // try {
-      //   var response = await post(url, body: {
-      //     'number': numberFieldController.text,
-      //   });
-      //   if (response.statusCode == 200) {
-      //     var data = jsonDecode(response.body);
-      //     if (data['data']['type'] == 'token') {
-      //       CredentialsFile.writeCredentials(
-      //           Credentials(numberFieldController.text, data['data']['token']));
-      //       _auth
-      //           .signInWithCustomToken(token: data['data']['token'])
-      //           .then((result) {
-      //         if (result.user != null) {
-      //           Provider.of<UIDModel>(context, listen: false).setUID(numberFieldController.text);
-      //           Navigator.pushReplacement(context,
-      //               MaterialPageRoute(builder: (context) => MainScreen()));
-      //         } else {
-      //           setState(() {
-      //             loading = false;
-      //             error = "Unable to authenticate user.";
-      //           });
-      //         }
-      //       }).catchError((error) {
-      //         setState(() {
-      //           loading = false;
-      //           error = "Error authenticating user.";
-      //         });
-      //       });
-      //     } else {
-      //       setState(() {
-      //         loading = false;
-      //         error = data['data']['message'];
-      //       });
-      //     }
-      //   } else {
-      //     setState(() {
-      //       loading = false;
-      //       error = "Server error.";
-      //     });
-      //   }
-      // } catch (exception) {
-      //   print(exception);
-      //   setState(() {
-      //     loading = false;
-      //     error = "Unable to contact server.";
-      //   });
-      // }
     } else {
       setState(() {
         error = "Please enter all 4 digits of your number.";
