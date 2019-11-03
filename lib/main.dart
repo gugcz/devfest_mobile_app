@@ -1,5 +1,5 @@
 import 'package:devfest_mobile_app/config.dart';
-import 'package:devfest_mobile_app/models/uid_model.dart';
+import 'package:devfest_mobile_app/models/app_model.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      builder: (context) => UIDModel(),
+      builder: (context) => AppModel(),
       child: MyApp(),
     ),
   );
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     //CredentialsFile.writeCredentials(Credentials('', ''));
-    Provider.of<UIDModel>(context, listen: false)
+    Provider.of<AppModel>(context, listen: false)
                 .setUID('1234');
     return MaterialApp(
       theme: ThemeData(
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               future: _auth.getCurrentUserData(),
               builder: (cont, snap){
                 if (snap.data != null && snap.data.data['uuid'] != null){
-                  Provider.of<UIDModel>(context, listen: false)
+                  Provider.of<AppModel>(context, listen: false)
                      .setUID(snap.data.data['uuid']);
                   return MainScreen();
                 } else {

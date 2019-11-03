@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/config.dart';
-import 'package:devfest_mobile_app/models/uid_model.dart';
+import 'package:devfest_mobile_app/models/app_model.dart';
 import 'package:devfest_mobile_app/screens/question_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,17 +83,19 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _decideView() {
     if (_currentIndex == 0) {
-      return Consumer<UIDModel>(
+      return Consumer<AppModel>(
         builder: (context, model, child) {
           return StreamBuilder(
             builder: (context, projectSnap) {
               if (projectSnap.hasData) {
+                print(model.getUID());
+                print(projectSnap.data);
                 return Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Your score:",
+                        "Water collected:",
                         style: TextStyle(fontSize: 36),
                       ),
                       Padding(
@@ -102,16 +104,49 @@ class _MainScreenState extends State<MainScreen> {
                           bottom: 20,
                         ),
                         child: Text(
-                          projectSnap.data['totalScore'].toString(),
+                          projectSnap.data['totalScore'].toString() + " l",
                           style: TextStyle(fontSize: 64),
                         ),
                       ),
                       Text(
-                        "litres of water",
-                        style: TextStyle(fontSize: 26),
+                        "Water to give:",
+                        style: TextStyle(fontSize: 32),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(30, 50, 50, 30),
+                        padding: EdgeInsets.only(
+                          top: 20,
+                          bottom: 40,
+                        ),
+                        child: Text(
+                          projectSnap.data['actualScore'].toString() + " l",
+                          style: TextStyle(fontSize: 48),
+                        ),
+                      ),
+                      OutlineButton(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Text(
+                            "Give water",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                        color: Config.colorPalette.shade50,
+                        splashColor: Config.colorPalette.shade100,
+                        highlightColor: Config.colorPalette.shade100,
+                        onPressed: () {},
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 1,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(7.0),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(30, 40, 50, 30),
                         child: Text(
                           "Scan more QR codes and answer question to receive more points!",
                           style: TextStyle(fontSize: 18),
