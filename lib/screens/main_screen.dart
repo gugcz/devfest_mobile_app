@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:connectivity/connectivity.dart';
 
 class MainScreen extends StatefulWidget {
   final String number;
@@ -20,6 +21,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  int _stackToView = 1;
 
   Widget _decideBottomNavigation() {
     return BottomNavigationBar(
@@ -28,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
       onTap: (index) {
         setState(() {
           _currentIndex = index;
+          _stackToView = 0;
         });
       },
       currentIndex: _currentIndex,
@@ -63,6 +66,19 @@ class _MainScreenState extends State<MainScreen> {
             foregroundColor: Colors.white,
           )
         : null;
+  }
+
+  void _handleWebViewLoad(String value) async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        _stackToView = 2;
+      });
+    } else {
+      setState(() {
+        _stackToView = 0;
+      });
+    }
   }
 
   Widget _decideView() {
@@ -136,10 +152,64 @@ class _MainScreenState extends State<MainScreen> {
         },
       );
     } else {
-      return WebView(
-        initialUrl:
-            'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
-        javascriptMode: JavascriptMode.unrestricted,
+      return IndexedStack(
+        index: _stackToView,
+        children: <Widget>[
+          WebView(
+            initialUrl:
+                'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: _handleWebViewLoad,
+            onWebViewCreated: (controller) {
+              print('controller.toString()');
+              controller.currentUrl().then((value) {
+                print('currentUrl');
+                print(value);
+              });
+              controller.getTitle().then((value) {
+                print('value');
+                print(value);
+              });
+            },
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+                Text(
+                  'Loading',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Unable to load map.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
       );
     }
   }
