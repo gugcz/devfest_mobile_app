@@ -145,8 +145,6 @@ class _StartScreenState extends State<StartScreen> {
                             int.parse(numberFieldController.text));
                         Provider.of<UIDModel>(context, listen: false)
                             .setUID(uuid);
-                        Provider.of<UIDModel>(context, listen: false)
-                            .setNumberBadge(int.parse(numberFieldController.text));
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
