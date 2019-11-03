@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:devfest_mobile_app/screens/correct_answer_screen.dart';
+import 'package:devfest_mobile_app/screens/wrong_answer_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:http/http.dart';
 import 'package:devfest_mobile_app/config.dart';
@@ -7,6 +9,7 @@ import 'package:devfest_mobile_app/components/gug_logo.dart';
 import 'package:devfest_mobile_app/entities/question.dart';
 import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class QuestionScreen extends StatefulWidget {
   final String questionId;
@@ -32,27 +35,27 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 
   _loadQuestion() async {
-    var url =
-        'https://us-central1-devfestcztest.cloudfunctions.net/loadQuestion';
     try {
-      var response = await post(url, body: {
+      final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+        functionName: 'loadQuestion',
+      );
+
+      HttpsCallableResult resp = await callable.call(<String, dynamic>{
         'number': Provider.of<UIDModel>(context, listen: false).getUID(),
-        'questionId': questionId,
+        'questionId': this.questionId,
       });
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
+
+      if (resp.data['type'] == 'question') {
         setState(() {
           question = new Question(
-            question: data['data']['question']['question'],
-            answer1: data['data']['question']['answer1'],
-            answer2: data['data']['question']['answer2'],
-            answer3: data['data']['question']['answer3'],
-            answer4: data['data']['question']['answer4'],
+            question: resp.data['question']['question'],
+            answer1: resp.data['question']['answer1'],
+            answer2: resp.data['question']['answer2'],
+            answer3: resp.data['question']['answer3'],
+            answer4: resp.data['question']['answer4'],
           );
           loading = false;
         });
-      } else {
-        print("Server error");
       }
     } catch (exception) {
       print(exception);
@@ -98,7 +101,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(1);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -118,7 +123,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(2);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -138,7 +145,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(3);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -158,7 +167,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               color: Config.colorPalette.shade50,
                               splashColor: Config.colorPalette.shade100,
                               highlightColor: Config.colorPalette.shade100,
-                              onPressed: () {},
+                              onPressed: () {
+                                _sendAnswer(4);
+                              },
                               borderSide: BorderSide(
                                 color: Colors.white,
                                 width: 1,
@@ -178,5 +189,46 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
             resizeToAvoidBottomInset: false,
           );
+  }
+
+  _sendAnswer(int answer) async {
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+        functionName: 'answerQuestion',
+      );
+
+      dynamic resp = await callable.call(<String, dynamic>{
+        'number': Provider.of<UIDModel>(context, listen: false).getUID(),
+        'questionId': this.questionId,
+        'answer': answer.toString()
+      });
+
+      if (resp.data['type'] == 'correctAnswer') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CorrectAnswerScreen(
+              pointsEarned: resp.data['pointsEarned'],
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WrongAnswerScreen(),
+          ),
+        );
+      }
+    } catch (exception) {
+      print(exception);
+      setState(() {
+        loading = false;
+      });
+    }
   }
 }

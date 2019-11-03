@@ -8,6 +8,7 @@ import 'package:devfest_mobile_app/utils/credentials_file.dart';
 import 'package:devfest_mobile_app/components/decide_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(
@@ -24,6 +25,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    //CredentialsFile.writeCredentials(Credentials('', ''));
+    Provider.of<UIDModel>(context, listen: false)
+                .setUID('1234');
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Config.colorPalette,
