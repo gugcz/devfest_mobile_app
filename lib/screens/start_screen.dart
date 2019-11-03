@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
@@ -10,6 +11,7 @@ import 'package:devfest_mobile_app/utils/credentials_file.dart';
 import 'package:http/http.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import '../utils/auth.dart';
 
 class StartScreen extends StatefulWidget {
   StartScreen({Key key}) : super(key: key);
@@ -22,9 +24,9 @@ class _StartScreenState extends State<StartScreen> {
   bool loading = false;
   String error = "";
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final numberFieldController = TextEditingController();
+
+  final Auth auth = Auth();
 
   @override
   void dispose() {
@@ -116,55 +118,53 @@ class _StartScreenState extends State<StartScreen> {
         loading = true;
         error = "";
       });
-
-      var url = 'https://us-central1-devfestcztest.cloudfunctions.net/login';
-      try {
-        var response = await post(url, body: {
-          'number': numberFieldController.text,
-        });
-        if (response.statusCode == 200) {
-          var data = jsonDecode(response.body);
-          if (data['data']['type'] == 'token') {
-            CredentialsFile.writeCredentials(
-                Credentials(numberFieldController.text, data['data']['token']));
-            _auth
-                .signInWithCustomToken(token: data['data']['token'])
-                .then((result) {
-              if (result.user != null) {
-                Provider.of<UIDModel>(context, listen: false).setUID(numberFieldController.text);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => MainScreen()));
-              } else {
-                setState(() {
-                  loading = false;
-                  error = "Unable to authenticate user.";
-                });
-              }
-            }).catchError((error) {
-              setState(() {
-                loading = false;
-                error = "Error authenticating user.";
-              });
-            });
-          } else {
-            setState(() {
-              loading = false;
-              error = data['data']['message'];
-            });
-          }
-        } else {
-          setState(() {
-            loading = false;
-            error = "Server error.";
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: new Text("Sign in"),
+                content: new Text("Number " +
+                    numberFieldController.text +
+                    " will get locked for this phone"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: Text("Back"),
+                    onPressed: () {
+                      setState(() {
+                        loading = false;
+                        error = "";
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text("Sign in"),
+                    onPressed: () async {
+                        setState(() {
+                          loading = true;
+                          error = "";
+                        });
+                      try {
+                        String uuid = await auth.handleSignIn(
+                            int.parse(numberFieldController.text));
+                        Provider.of<UIDModel>(context, listen: false)
+                            .setUID(uuid);
+                        Navigator.of(context).pop();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainScreen()));
+                        auth.listenData();
+                      } catch (err) {
+                        setState(() {
+                          loading = false;
+                          error = "Error authenticating user.";
+                        });
+                      }
+                    },
+                  )
+                ]);
           });
-        }
-      } catch (exception) {
-        print(exception);
-        setState(() {
-          loading = false;
-          error = "Unable to contact server.";
-        });
-      }
     } else {
       setState(() {
         error = "Please enter all 4 digits of your number.";

@@ -3,6 +3,7 @@ import 'package:devfest_mobile_app/models/uid_model.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
+import 'package:devfest_mobile_app/utils/auth.dart';
 import 'package:devfest_mobile_app/utils/credentials_file.dart';
 import 'package:devfest_mobile_app/components/decide_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+  Auth _auth = Auth();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -33,20 +37,31 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         accentColor: Color(0xFFFFFFFFFF),
       ),
-      home: MainScreen(),/*FutureBuilder(
-        builder: (context, projectSnap) {
-          if (projectSnap.data == null) {
+      home: StreamBuilder(
+        stream: _auth.listenCurrentAuthState(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError || snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting){
             return LoadingScreen();
-          } else if (projectSnap.data.isEmpty()) {
-            return StartScreen();
           } else {
-            Provider.of<UIDModel>(context, listen: false)
-                .setUID(projectSnap.data.userNumber);
-            return DecideAuth(projectSnap.data);
+            if (snapshot.data != null && snapshot.data.uid != null){
+            return new FutureBuilder(
+              future: _auth.getCurrentUserData(),
+              builder: (cont, snap){
+                if (snap.data != null && snap.data.data['uuid'] != null){
+                  Provider.of<UIDModel>(context, listen: false)
+                     .setUID(snap.data.data['uuid']);
+                  return MainScreen();
+                } else {
+                  return StartScreen();
+                }
+              },
+            );
+            } else {
+              return StartScreen();
+            }
           }
         },
-        future: CredentialsFile.readCredentials(),
-      ),*/
+      )
     );
   }
 }
