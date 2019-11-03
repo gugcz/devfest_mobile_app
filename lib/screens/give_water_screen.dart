@@ -2,6 +2,9 @@ import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/components/fraction_item.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:devfest_mobile_app/models/app_model.dart';
+import 'package:provider/provider.dart';
 
 class GiveWaterScreen extends StatefulWidget {
   GiveWaterScreen({Key key}) : super(key: key);
@@ -11,7 +14,9 @@ class GiveWaterScreen extends StatefulWidget {
 }
 
 class _GiveWaterScreenState extends State<GiveWaterScreen> {
-  final numberFieldController = TextEditingController();
+  bool loading = false;
+
+  final waterFieldController = TextEditingController();
 
   FractionItemModel wastelandModel =
       FractionItemModel(true, AssetImage('assets/wasteland.png'), 'Wasteland');
@@ -125,7 +130,7 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'Water (40 l available)',
+                      'Water (' + Provider.of<AppModel>(context, listen: false).getActualScore().toString() + ' l available)',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -135,10 +140,11 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
                     Container(
                       width: 100,
                       child: TextField(
-                        keyboardType: TextInputType.number,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: false),
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 25),
-                        controller: numberFieldController,
+                        controller: waterFieldController,
                       ),
                     ),
                     Padding(
@@ -151,7 +157,17 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
                         color: Config.colorPalette.shade50,
                         splashColor: Config.colorPalette.shade100,
                         highlightColor: Config.colorPalette.shade100,
-                        onPressed: () {},
+                        onPressed: () {
+                          int fractionId = 0;
+                          if (wastelandModel.isSelected) {
+                            fractionId = 1;
+                          } else if (emeraldCityModel.isSelected) {
+                            fractionId = 2;
+                          } else {
+                            fractionId = 3;
+                          }
+                          _giveWater(fractionId);
+                        },
                         borderSide: BorderSide(
                           color: Colors.white,
                           width: 1,
@@ -171,5 +187,55 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
       ),
       resizeToAvoidBottomInset: false,
     );
+  }
+
+  _giveWater(int fractionId) async {
+    print('giveWater');
+    print(waterFieldController.value.text);
+    if (int.parse(waterFieldController.value.text) >
+        Provider.of<AppModel>(context, listen: false).getActualScore()) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                title: Text("Error"),
+                content: Text("You do not have enought water!"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ]);
+          });
+    } else {
+      setState(() {
+        loading = true;
+      });
+
+      try {
+        final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+          functionName: 'giveWater',
+        );
+
+        dynamic resp = await callable.call(<String, dynamic>{
+          'number': Provider.of<AppModel>(context, listen: false).getUID(),
+          'fractionId': fractionId.toString(),
+          'water': waterFieldController.value.text.toString()
+        });
+
+        if (resp.data['type'] == 'waterGivenSuccessfully') {
+          print('Success!');
+        } else {
+          print('Error!');
+        }
+      } catch (exception) {
+        print(exception);
+        setState(() {
+          loading = false;
+        });
+      }
+    }
   }
 }

@@ -89,6 +89,9 @@ class _MainScreenState extends State<MainScreen> {
           return StreamBuilder(
             builder: (context, projectSnap) {
               if (projectSnap.hasData) {
+                Provider.of<AppModel>(context, listen: false).setTotalScore(projectSnap.data['totalScore']);
+                Provider.of<AppModel>(context, listen: false).setActualScore(projectSnap.data['actualScore']);
+
                 return Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
