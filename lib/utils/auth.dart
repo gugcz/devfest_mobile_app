@@ -7,6 +7,22 @@ class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
 
+  void listenData()async{
+    FirebaseUser user = await _auth.currentUser();
+    if (user.uid != null) {
+      String uuid = user.uid;
+      StreamSubscription streamSubscription;
+      streamSubscription = _firestore.collection('users').document(uuid).snapshots().listen(
+        (data){
+          if (!data.exists){
+            _auth.signOut();
+            streamSubscription.cancel();
+          }
+        }
+      );
+    }
+  }
+
   Future<DocumentSnapshot> getCurrentUserData() async {
     FirebaseUser user = await _auth.currentUser();
     if (user.uid != null) {
@@ -19,6 +35,11 @@ class Auth {
       }
     }
     return null;
+  }
+
+
+  Stream<FirebaseUser> listenCurrentAuthState() {
+    return _auth.onAuthStateChanged;
   }
 
   Future<String> handleSignIn(int numberBadge) async {
@@ -40,11 +61,12 @@ class Auth {
           'actualScore': 0,
           'totalScore': 0
         });
-        await _firestore.collection('numberOnBadges').document(numberBadge.toString()).updateData({
-          'isUsed': true
+        await _firestore.collection('numbersOnBadges').document(numberBadge.toString()).setData({
+          'isUsed': true,
+          'number': numberBadge
         });
         return uuid;
-      }
+      }    
     }
     return null;
   }
