@@ -1,3 +1,4 @@
+import 'package:devfest_mobile_app/screens/give_water_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/models/app_model.dart';
@@ -88,8 +89,6 @@ class _MainScreenState extends State<MainScreen> {
           return StreamBuilder(
             builder: (context, projectSnap) {
               if (projectSnap.hasData) {
-                print(model.getUID());
-                print(projectSnap.data);
                 return Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +135,14 @@ class _MainScreenState extends State<MainScreen> {
                         color: Config.colorPalette.shade50,
                         splashColor: Config.colorPalette.shade100,
                         highlightColor: Config.colorPalette.shade100,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GiveWaterScreen(),
+                            ),
+                          );
+                        },
                         borderSide: BorderSide(
                           color: Colors.white,
                           width: 1,
@@ -148,7 +154,7 @@ class _MainScreenState extends State<MainScreen> {
                       Padding(
                         padding: EdgeInsets.fromLTRB(30, 40, 50, 30),
                         child: Text(
-                          "Scan more QR codes and answer question to receive more points!",
+                          "Scan more QR codes and answer question to receive more water!",
                           style: TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),
@@ -195,17 +201,6 @@ class _MainScreenState extends State<MainScreen> {
                 'https://maps.mapwize.io/#/p/devfestcz19/emerald_city_track?k=SSGLbv713lthqEg9&z=19&embed=true&venueId=5d9e2c3d6dc554006277453a',
             javascriptMode: JavascriptMode.unrestricted,
             onPageFinished: _handleWebViewLoad,
-            onWebViewCreated: (controller) {
-              print('controller.toString()');
-              controller.currentUrl().then((value) {
-                print('currentUrl');
-                print(value);
-              });
-              controller.getTitle().then((value) {
-                print('value');
-                print(value);
-              });
-            },
           ),
           Center(
             child: Column(
