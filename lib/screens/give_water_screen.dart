@@ -245,7 +245,7 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
         );
 
         dynamic resp = await callable.call(<String, dynamic>{
-          'number': Provider.of<AppModel>(context, listen: false).getUID(),
+          'number': Provider.of<AppModel>(context, listen: false).getBadgeNumber(),
           'fractionId': fractionId.toString(),
           'water': waterFieldController.value.text.toString()
         });

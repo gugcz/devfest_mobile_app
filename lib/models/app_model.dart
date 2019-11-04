@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 
 class AppModel extends ChangeNotifier {
-  String _uid;
+  String _badgeNumber;
   int _totalScore;
   int _actualScore;
 
-  String getUID() {
-    return _uid;
+  String getBadgeNumber() {
+    return _badgeNumber;
   }
 
-  void setUID(String uid) {
-    _uid = uid;
+  void setBadgeNumber(String badgeNumber) {
+    _badgeNumber = badgeNumber;
   }
 
   int getTotalScore() {

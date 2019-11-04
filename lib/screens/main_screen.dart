@@ -190,7 +190,7 @@ class _MainScreenState extends State<MainScreen> {
             },
             stream: Firestore.instance
                 .collection('users')
-                .document(model.getUID())
+                .document(model.getBadgeNumber())
                 .snapshots(),
           );
         },

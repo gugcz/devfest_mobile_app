@@ -143,7 +143,7 @@ class _StartScreenState extends State<StartScreen> {
                         String uuid = await auth.handleSignIn(
                             int.parse(numberFieldController.text));
                         Provider.of<AppModel>(context, listen: false)
-                            .setUID(uuid);
+                            .setBadgeNumber(numberFieldController.text);
                         Navigator.of(context).pop();
                         Navigator.pushReplacement(
                             context,
