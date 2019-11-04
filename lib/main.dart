@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
                   builder: (cont, snap) {
                     if (snap.data != null && snap.data.data['uuid'] != null) {
                       Provider.of<AppModel>(context, listen: false)
-                          .setBadgeNumber(snap.data.data['uuid']);
+                          .setUID(snap.data.data['uuid']);
                       return MainScreen();
                     } else if (snap.hasError) {
                       return StartScreen();
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
                   },
                 );
               } else {
-                return LoadingScreen();
+                return StartScreen();
               }
             }
           },

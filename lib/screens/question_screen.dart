@@ -39,7 +39,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       );
 
       HttpsCallableResult resp = await callable.call(<String, dynamic>{
-        'number': Provider.of<AppModel>(context, listen: false).getBadgeNumber(),
+        'number': Provider.of<AppModel>(context, listen: false).getUID(),
         'questionId': this.questionId,
       });
 
@@ -200,7 +200,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       );
 
       dynamic resp = await callable.call(<String, dynamic>{
-        'number': Provider.of<AppModel>(context, listen: false).getBadgeNumber(),
+        'number': Provider.of<AppModel>(context, listen: false).getUID(),
         'questionId': this.questionId,
         'answer': answer.toString()
       });

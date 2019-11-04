@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/models/app_model.dart';
 import 'package:devfest_mobile_app/screens/question_screen.dart';
+import 'package:devfest_mobile_app/screens/error_barcode_scanner_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -89,8 +90,10 @@ class _MainScreenState extends State<MainScreen> {
           return StreamBuilder(
             builder: (context, projectSnap) {
               if (projectSnap.hasData) {
-                Provider.of<AppModel>(context, listen: false).setTotalScore(projectSnap.data['totalScore']);
-                Provider.of<AppModel>(context, listen: false).setActualScore(projectSnap.data['actualScore']);
+                Provider.of<AppModel>(context, listen: false)
+                    .setTotalScore(projectSnap.data['totalScore']);
+                Provider.of<AppModel>(context, listen: false)
+                    .setActualScore(projectSnap.data['actualScore']);
 
                 return Container(
                   child: Column(
@@ -138,14 +141,16 @@ class _MainScreenState extends State<MainScreen> {
                         color: Config.colorPalette.shade50,
                         splashColor: Config.colorPalette.shade100,
                         highlightColor: Config.colorPalette.shade100,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GiveWaterScreen(),
-                            ),
-                          );
-                        },
+                        onPressed: projectSnap.data['actualScore'] == 0
+                            ? null
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => GiveWaterScreen(),
+                                  ),
+                                );
+                              },
                         borderSide: BorderSide(
                           color: Colors.white,
                           width: 1,
@@ -190,7 +195,7 @@ class _MainScreenState extends State<MainScreen> {
             },
             stream: Firestore.instance
                 .collection('users')
-                .document(model.getBadgeNumber())
+                .document(model.getUID())
                 .snapshots(),
           );
         },
@@ -277,6 +282,12 @@ class _MainScreenState extends State<MainScreen> {
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         print('The user did not grant the camera permission!');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ErrorBarcodeScannerScreen(),
+          ),
+        );
       } else {
         print('Unknown error: $e');
       }
