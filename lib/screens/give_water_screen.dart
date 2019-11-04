@@ -186,6 +186,30 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: OutlineButton(
+                              child: Text(
+                                "Back",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: Config.colorPalette.shade50,
+                              splashColor: Config.colorPalette.shade100,
+                              highlightColor: Config.colorPalette.shade100,
+                              onPressed: () {
+                                Navigator.pop(
+                                  context,
+                                );
+                              },
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(7.0),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

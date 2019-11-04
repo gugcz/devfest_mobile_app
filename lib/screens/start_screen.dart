@@ -41,63 +41,61 @@ class _StartScreenState extends State<StartScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Column(children: <Widget>[
-                      DevFestLogo(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'Enter code located at the back of your badge.',
-                              style: TextStyle(
+                    DevFestLogo(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 50),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            'Enter code located at the back of your badge.',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Container(
+                              width: 100,
+                              child: TextField(
+                                maxLength: 4,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 25),
+                                controller: numberFieldController,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            error,
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: OutlineButton(
+                              child: Text(
+                                "Login",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: Config.colorPalette.shade50,
+                              splashColor: Config.colorPalette.shade100,
+                              highlightColor: Config.colorPalette.shade100,
+                              onPressed: _login,
+                              borderSide: BorderSide(
                                 color: Colors.white,
+                                width: 1,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              child: Container(
-                                width: 100,
-                                child: TextField(
-                                  maxLength: 4,
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 25),
-                                  controller: numberFieldController,
-                                ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(7.0),
                               ),
                             ),
-                            Text(
-                              error,
-                              style: TextStyle(
-                                color: Colors.red,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: OutlineButton(
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                color: Config.colorPalette.shade50,
-                                splashColor: Config.colorPalette.shade100,
-                                highlightColor: Config.colorPalette.shade100,
-                                onPressed: _login,
-                                borderSide: BorderSide(
-                                  color: Colors.white,
-                                  width: 1,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(7.0),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ]),
+                    ),
                     GUGLogo(),
                   ],
                 ),
@@ -140,7 +138,7 @@ class _StartScreenState extends State<StartScreen> {
                             int.parse(numberFieldController.text));
                         Provider.of<AppModel>(context, listen: false)
                             .setUID(uuid);
-                        Navigator.of(context).pop();   
+                        Navigator.of(context).pop();
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => MainScreen()),
