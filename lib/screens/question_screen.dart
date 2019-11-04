@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'package:devfest_mobile_app/screens/correct_answer_screen.dart';
 import 'package:devfest_mobile_app/screens/wrong_answer_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
-import 'package:http/http.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 import 'package:devfest_mobile_app/entities/question.dart';
-import 'package:devfest_mobile_app/models/uid_model.dart';
+import 'package:devfest_mobile_app/models/app_model.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
@@ -41,7 +39,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       );
 
       HttpsCallableResult resp = await callable.call(<String, dynamic>{
-        'number': Provider.of<UIDModel>(context, listen: false).getUID(),
+        'number': Provider.of<AppModel>(context, listen: false).getBadgeNumber(),
         'questionId': this.questionId,
       });
 
@@ -202,7 +200,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       );
 
       dynamic resp = await callable.call(<String, dynamic>{
-        'number': Provider.of<UIDModel>(context, listen: false).getUID(),
+        'number': Provider.of<AppModel>(context, listen: false).getBadgeNumber(),
         'questionId': this.questionId,
         'answer': answer.toString()
       });
