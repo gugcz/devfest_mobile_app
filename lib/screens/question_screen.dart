@@ -63,7 +63,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final double itemWidth = 150;
-    final double itemHeight = 65;
+    final double itemHeight = 85;
 
     return loading
         ? LoadingScreen()
