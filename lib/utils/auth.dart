@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -37,6 +38,19 @@ class Auth {
     return null;
   }
 
+  Future<Stream<DocumentSnapshot>> listenUserData() async {
+    FirebaseUser user = await _auth.currentUser();
+    if (user.uid != null) {
+      String uuid = user.uid;
+      Stream<DocumentSnapshot> data = _firestore.collection('users').document(uuid).snapshots();
+      return data;
+    }
+    return null;
+  }
+
+  void signOut() {
+    _auth.signOut();
+  }
 
   Stream<FirebaseUser> listenCurrentAuthState() {
     return _auth.onAuthStateChanged;

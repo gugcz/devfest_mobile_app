@@ -39,9 +39,7 @@ class LoadingScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              GUGLogo(
-                opacity: 0.75,
-              ),
+              GUGLogo(),
             ],
           ),
         ),
