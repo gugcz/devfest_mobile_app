@@ -135,20 +135,20 @@ class _StartScreenState extends State<StartScreen> {
                   FlatButton(
                     child: Text("Sign in"),
                     onPressed: () async {
-                        setState(() {
-                          loading = true;
-                          error = "";
-                        });
+                      setState(() {
+                        loading = true;
+                        error = "";
+                      });
                       try {
                         String uuid = await auth.handleSignIn(
                             int.parse(numberFieldController.text));
                         Provider.of<AppModel>(context, listen: false)
-                            .setUID(numberFieldController.text);
+                            .setUID(uuid);
                         Navigator.of(context).pop();
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MainScreen()));
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        );
                         auth.listenData();
                       } catch (err) {
                         setState(() {

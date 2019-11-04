@@ -24,7 +24,7 @@ class ErrorBarcodeScannerScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15),
                       child: Text(
-                        'Could not give water. Please try again later.',
+                        'To scan barcode app needs camera permission.',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 36),
                       ),

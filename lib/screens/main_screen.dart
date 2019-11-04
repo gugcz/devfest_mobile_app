@@ -89,7 +89,9 @@ class _MainScreenState extends State<MainScreen> {
         builder: (context, model, child) {
           return StreamBuilder(
             builder: (context, projectSnap) {
+              print(model.getUID());
               if (projectSnap.hasData) {
+                print(projectSnap.data);
                 Provider.of<AppModel>(context, listen: false)
                     .setTotalScore(projectSnap.data['totalScore']);
                 Provider.of<AppModel>(context, listen: false)
