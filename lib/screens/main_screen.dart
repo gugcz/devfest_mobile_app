@@ -87,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _decideView() {
     if (_currentIndex == 0) {
-      return Consumer<AppModel>(
+      /*return Consumer<AppModel>(
         builder: (context, model, child) {
           return StreamBuilder(
             builder: (context, projectSnap) {
@@ -97,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
                 Provider.of<AppModel>(context, listen: false)
                     .setTotalScore(projectSnap.data['totalScore']);
                 Provider.of<AppModel>(context, listen: false)
-                    .setActualScore(projectSnap.data['actualScore']);
+                    .setActualScore(projectSnap.data['actualScore']);*/
                 return Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
                           bottom: 20,
                         ),
                         child: Text(
-                          projectSnap.data['totalScore'].toString() + " l",
+                          /*projectSnap.data['totalScore'].toString() + */"60 l",
                           style: TextStyle(fontSize: 64),
                         ),
                       ),
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
                           bottom: 40,
                         ),
                         child: Text(
-                          projectSnap.data['actualScore'].toString() + " l",
+                          /*projectSnap.data['actualScore'].toString() + */"30 l",
                           style: TextStyle(fontSize: 48),
                         ),
                       ),
@@ -144,9 +144,9 @@ class _MainScreenState extends State<MainScreen> {
                         color: Config.colorPalette.shade50,
                         splashColor: Config.colorPalette.shade100,
                         highlightColor: Config.colorPalette.shade100,
-                        onPressed: projectSnap.data['actualScore'] == 0
+                        onPressed: /*projectSnap.data['actualScore'] == 0
                             ? null
-                            : () {
+                            : */() {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -173,7 +173,7 @@ class _MainScreenState extends State<MainScreen> {
                     ],
                   ),
                 );
-              } else {
+              /*} else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -202,7 +202,7 @@ class _MainScreenState extends State<MainScreen> {
                 .snapshots(),
           );
         },
-      );
+      );*/
     } else {
       return IndexedStack(
         index: _stackToView,

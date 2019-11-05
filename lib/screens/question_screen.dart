@@ -22,14 +22,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
   final String questionId;
   bool loading = true;
   Question question = Question(
-      question: '', answer1: '', answer2: '', answer3: '', answer4: '');
+      question: 'Which genre does cyberpunk belong to?', answer1: 'Fantasy', answer2: 'Sci-Fi', answer3: 'Psychological thriller', answer4: 'Comedy');
 
   _QuestionScreenState(this.questionId);
 
   @override
   void initState() {
     super.initState();
-    _loadQuestion();
+    //_loadQuestion();
   }
 
   _loadQuestion() async {
@@ -65,9 +65,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
     final double itemWidth = 150;
     final double itemHeight = 85;
 
-    return loading
+    return /*loading
         ? LoadingScreen()
-        : Scaffold(
+        : */Scaffold(
             backgroundColor: Config.colorPalette.shade500,
             body: Center(
               child: Padding(

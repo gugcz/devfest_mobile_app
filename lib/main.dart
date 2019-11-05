@@ -1,6 +1,9 @@
 import 'package:devfest_mobile_app/config.dart';
 import 'package:devfest_mobile_app/models/app_model.dart';
+import 'package:devfest_mobile_app/screens/correct_answer_screen.dart';
+import 'package:devfest_mobile_app/screens/give_water_screen.dart';
 import 'package:devfest_mobile_app/screens/main_screen.dart';
+import 'package:devfest_mobile_app/screens/question_screen.dart';
 import 'package:devfest_mobile_app/screens/start_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/utils/auth.dart';
@@ -28,39 +31,40 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Config.colorPalette,
-          brightness: Brightness.dark,
-          accentColor: Color(0xFFFFFFFFFF),
-        ),
-        home: StreamBuilder(
-          stream: _auth.listenCurrentAuthState(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError ||
-                snapshot.connectionState == ConnectionState.none ||
-                snapshot.connectionState == ConnectionState.waiting) {
-              return LoadingScreen();
+      theme: ThemeData(
+        primarySwatch: Config.colorPalette,
+        brightness: Brightness.dark,
+        accentColor: Color(0xFFFFFFFFFF),
+      ),
+      home: StreamBuilder(
+        stream: _auth.listenCurrentAuthState(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError ||
+              snapshot.connectionState == ConnectionState.none ||
+              snapshot.connectionState == ConnectionState.waiting) {
+            return LoadingScreen();
+          } else {
+            if (snapshot.data != null && snapshot.data.uid != null) {
+              return new FutureBuilder(
+                future: _auth.getCurrentUserData(),
+                builder: (cont, snap) {
+                  if (snap.data != null && snap.data.data['uuid'] != null) {
+                    Provider.of<AppModel>(context, listen: false)
+                        .setUID(snap.data.data['uuid']);
+                    return MainScreen();
+                  } else if (snap.hasError) {
+                    return StartScreen();
+                  } else {
+                    return LoadingScreen();
+                  }
+                },
+              );
             } else {
-              if (snapshot.data != null && snapshot.data.uid != null) {
-                return new FutureBuilder(
-                  future: _auth.getCurrentUserData(),
-                  builder: (cont, snap) {
-                    if (snap.data != null && snap.data.data['uuid'] != null) {
-                      Provider.of<AppModel>(context, listen: false)
-                          .setUID(snap.data.data['uuid']);
-                      return MainScreen();
-                    } else if (snap.hasError) {
-                      return StartScreen();
-                    } else {
-                      return LoadingScreen();
-                    }
-                  },
-                );
-              } else {
-                return StartScreen();
-              }
+              return StartScreen();
             }
-          },
-        ));
+          }
+        },
+      ),
+    );
   }
 }
