@@ -179,7 +179,7 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(bottom: 15),
+                          padding: EdgeInsets.only(bottom: 10),
                           child: InkWell(
                             onTap: () {
                               Navigator.push(
@@ -197,6 +197,13 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: Text(
+                            "The Apple, Inc. company is not a sponsor or any other party of this Game.",
+                            style: TextStyle(fontSize: 10),
+                          )
+                        )
                       ],
                     ),
                   ),

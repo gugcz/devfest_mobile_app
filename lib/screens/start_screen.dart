@@ -101,7 +101,7 @@ class _StartScreenState extends State<StartScreen> {
                     Column(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(bottom: 25),
+                          padding: EdgeInsets.only(bottom: 10),
                           child: InkWell(
                             onTap: () {
                               Navigator.push(
@@ -118,6 +118,13 @@ class _StartScreenState extends State<StartScreen> {
                               ),
                             ),
                           ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            "The Apple, Inc. company is not a sponsor or any other party of this Game.",
+                            style: TextStyle(fontSize: 10),
+                          )
                         ),
                         GUGLogo(),
                       ],
