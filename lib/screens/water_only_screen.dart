@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:devfest_mobile_app/components/devfest_logo.dart';
 import 'package:devfest_mobile_app/components/gug_logo.dart';
 
-class ErrorBarcodeScannerScreen extends StatelessWidget {
-  ErrorBarcodeScannerScreen({Key key}) : super(key: key);
+class WaterOnlyScreen extends StatelessWidget {
+  int pointsEarned;
+  WaterOnlyScreen({Key key, this.pointsEarned}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,16 @@ class ErrorBarcodeScannerScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 15),
                       child: Text(
-                        'App needs camera permission to scan barcode.',
+                        'You found water!',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 36),
+                        style: TextStyle(fontSize: 40),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 36),
+                      child: Text(
+                        'You earned $pointsEarned l of water.',
+                        style: TextStyle(fontSize: 20),
                       ),
                     ),
                     OutlineButton(

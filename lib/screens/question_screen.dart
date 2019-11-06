@@ -1,5 +1,6 @@
 import 'package:devfest_mobile_app/screens/correct_answer_screen.dart';
 import 'package:devfest_mobile_app/screens/wrong_answer_screen.dart';
+import 'package:devfest_mobile_app/screens/water_only_screen.dart';
 import 'package:devfest_mobile_app/screens/loading_screen.dart';
 import 'package:devfest_mobile_app/config.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
-    //_loadQuestion();
+    _loadQuestion();
   }
 
   _loadQuestion() async {
@@ -43,6 +44,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
         'questionId': this.questionId,
       });
 
+      print(resp.data['type']);
+      print('type');
+
       if (resp.data['type'] == 'question') {
         setState(() {
           question = new Question(
@@ -54,6 +58,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
           );
           loading = false;
         });
+      } else if (resp.data['type'] == 'pointsOnly') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WaterOnlyScreen(pointsEarned: resp.data['pointsEarned']),
+          ),
+        );
       }
     } catch (exception) {
       print(exception);
@@ -65,9 +76,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
     final double itemWidth = 150;
     final double itemHeight = 85;
 
-    return /*loading
+    return loading
         ? LoadingScreen()
-        : */Scaffold(
+        : Scaffold(
             backgroundColor: Config.colorPalette.shade500,
             body: Center(
               child: Padding(

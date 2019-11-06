@@ -1,4 +1,5 @@
 import 'package:devfest_mobile_app/screens/give_water_screen.dart';
+import 'package:devfest_mobile_app/screens/rules_screen.dart';
 import 'package:devfest_mobile_app/utils/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:devfest_mobile_app/config.dart';
@@ -87,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
 
   Widget _decideView() {
     if (_currentIndex == 0) {
-      /*return Consumer<AppModel>(
+      return Consumer<AppModel>(
         builder: (context, model, child) {
           return StreamBuilder(
             builder: (context, projectSnap) {
@@ -97,83 +98,110 @@ class _MainScreenState extends State<MainScreen> {
                 Provider.of<AppModel>(context, listen: false)
                     .setTotalScore(projectSnap.data['totalScore']);
                 Provider.of<AppModel>(context, listen: false)
-                    .setActualScore(projectSnap.data['actualScore']);*/
+                    .setActualScore(projectSnap.data['actualScore']);
                 return Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Water collected",
-                        style: TextStyle(fontSize: 36),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 20,
-                          bottom: 20,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Water collected",
+                          style: TextStyle(fontSize: 28),
                         ),
-                        child: Text(
-                          /*projectSnap.data['totalScore'].toString() + */"60 l",
-                          style: TextStyle(fontSize: 64),
-                        ),
-                      ),
-                      Text(
-                        "Water to give",
-                        style: TextStyle(fontSize: 32),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 20,
-                          bottom: 40,
-                        ),
-                        child: Text(
-                          /*projectSnap.data['actualScore'].toString() + */"30 l",
-                          style: TextStyle(fontSize: 48),
-                        ),
-                      ),
-                      OutlineButton(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 5,
+                            bottom: 5,
+                          ),
                           child: Text(
-                            "Give water",
+                            projectSnap.data['totalScore'].toString(),
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
+                              fontSize: 36,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
-                        color: Config.colorPalette.shade50,
-                        splashColor: Config.colorPalette.shade100,
-                        highlightColor: Config.colorPalette.shade100,
-                        onPressed: /*projectSnap.data['actualScore'] == 0
-                            ? null
-                            : */() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => GiveWaterScreen(),
-                                  ),
-                                );
-                              },
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 1,
+                        Text(
+                          "Water to give",
+                          style: TextStyle(fontSize: 28),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(7.0),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 5,
+                            bottom: 5,
+                          ),
+                          child: Text(
+                            projectSnap.data['actualScore'].toString(),
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(30, 40, 50, 30),
-                        child: Text(
-                          "Scan more QR codes and answer question to receive more water!",
-                          style: TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
+                        OutlineButton(
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: Text(
+                              "Give water",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                          color: Config.colorPalette.shade50,
+                          splashColor: Config.colorPalette.shade100,
+                          highlightColor: Config.colorPalette.shade100,
+                          onPressed: projectSnap.data['actualScore'] == 0
+                              ? null
+                              : () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => GiveWaterScreen(),
+                                    ),
+                                  );
+                                },
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7.0),
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
+                          child: Text(
+                            "Scan more QR codes and answer question to receive more water!",
+                            style: TextStyle(fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 15),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RulesScreen(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Contest rules',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
-              /*} else {
+              } else {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -202,7 +230,7 @@ class _MainScreenState extends State<MainScreen> {
                 .snapshots(),
           );
         },
-      );*/
+      );
     } else {
       return IndexedStack(
         index: _stackToView,

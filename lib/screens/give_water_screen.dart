@@ -136,10 +136,10 @@ class _GiveWaterScreenState extends State<GiveWaterScreen> {
                         children: <Widget>[
                           Text(
                             'Water (' +
-                                /*Provider.of<AppModel>(context, listen: false)
+                                Provider.of<AppModel>(context, listen: false)
                                     .getActualScore()
                                     .toString() +
-                                */'30 l available)',
+                            ' l available)',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
