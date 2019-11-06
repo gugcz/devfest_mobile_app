@@ -60,12 +60,11 @@ class RulesScreen extends StatelessWidget {
                       "1. Basic information about the Game, its Organiser and its duration\n" +
                           "2. Game rules\n" +
                           "3. Conditions of participation in the Game\n" +
-                          "4. Princip soutěže\n" +
-                          "5. Game principle\n" +
-                          "6. Prizes\n" +
-                          "7. Winners and handling the prizes\n" +
-                          "8. Personal data protection\n" +
-                          "9. Other information",
+                          "4. Game principle\n" +
+                          "5. Prizes\n" +
+                          "6. Winners and handling the prizes\n" +
+                          "7. Personal data protection\n" +
+                          "8. Other information",
                       style: TextStyle(fontSize: 16, height: 1.75),
                     ),
                   ),
@@ -140,9 +139,6 @@ class RulesScreen extends StatelessWidget {
                           TextSpan(
                             text: 'at 8:00',
                             style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: 'Game',
                           ),
                           TextSpan(
                             text: ' and end on the same day ',
@@ -553,7 +549,7 @@ class RulesScreen extends StatelessWidget {
                       bottom: 20,
                     ),
                     child: Text(
-                      "8. Personal data protection",
+                      "8. Other information",
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
