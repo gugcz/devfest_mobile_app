@@ -15,17 +15,31 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  firebase_core: ^0.4.0+1
+  http: ^0.12.0+2
+  path_provider: ^1.4.0
   cupertino_icons: ^0.1.2
-  path_provider: 0.4.1
-  barcode_scan: ^0.0.4
+  barcode_scan: ^1.0.0
   qr_flutter: ^1.1.1
+  firebase_auth: ^0.14.0+5
+  webview_flutter: ^0.3.15+1
+  cloud_firestore: ^0.12.9+6
+  provider: ^3.1.0+1
+  connectivity: ^0.4.5+2
+  cloud_functions: ^0.4.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.4
 
+
+flutter_icons:
+  image_path_android: "assets/icon/icon-rounded.png"
+  image_path_ios: ""
+  android: true
+  ios: false
+  adaptive_icon_background: "assets/icon/background.png"
+  adaptive_icon_foreground: "assets/icon/foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -42,8 +56,9 @@ flutter:
   assets:
   - assets/devfest2019_logo.png
   - assets/gug_logo.png
-  - assets/ozzy.jpg
-  - assets/black-sabbath.jpg
+  - assets/emerald_city.png
+  - assets/wasteland.png
+  - assets/spaceship.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -55,7 +70,7 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
-  # example:
+  # example:webview_flutter
   # fonts:
   #   - family: Schyler
   #     fonts:
