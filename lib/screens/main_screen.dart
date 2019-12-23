@@ -30,14 +30,14 @@ class _MainScreenState extends State<MainScreen> {
             minutes: "00",
           ),
           ScheduleItemCard(
-            item: ScheduleItem(
-                title: "Keynote",
-                time: "9:00",
-                language: "EN",
-                hall: "Hall A",
-                description:
-                    "Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote!"),
-          ),
+              item: ScheduleItem(
+                  title: "Keynote",
+                  time: "9:00",
+                  language: "EN",
+                  hall: "Hall A",
+                  description:
+                      "Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote! Don't miss the opening keynote!"),
+            ),
           ScheduleTimeTitle(
             hours: "9",
             minutes: "30",
